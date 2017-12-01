@@ -23,7 +23,10 @@ fn parse_args() -> (u32, Vec<String>) {
     return (problem_number, file_names);
 }
 
-fn open(filename: &str) -> Vec<String> {
+fn open<T>(filename: &T) -> Vec<String>
+where
+    T: AsRef<std::path::Path> + std::fmt::Display,
+{
     let mut file = File::open(filename).expect(&format!("Can't open file {}", filename));
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
