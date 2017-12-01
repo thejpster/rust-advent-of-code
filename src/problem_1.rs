@@ -11,14 +11,15 @@ pub fn run(contents: &Vec<Vec<String>>) {
     // for number in &numbers {
     //     println!("Number: {}", number);
     // }
-    let offset = numbers.len() / 2;
-    let mut sum = 0;
-    for idx in 0..numbers.len() {
-        let x = numbers[idx];
-        let y = numbers[(idx + offset) % numbers.len()];
-        if x == y {
-            sum = sum + x;
+    for offset in [1, numbers.len() / 2].iter() {
+        let mut sum = 0;
+        for idx in 0..numbers.len() {
+            let x = numbers[idx];
+            let y = numbers[(idx + offset) % numbers.len()];
+            if x == y {
+                sum = sum + x;
+            }
         }
+        println!("Sum: {}", sum);
     }
-    println!("Sum: {}", sum);
 }
