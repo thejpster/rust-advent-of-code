@@ -34,7 +34,7 @@ pub fn run(contents: &Vec<Vec<String>>) {
             _ => panic!("Bad move {}", x),
         }
     });
-    let mut visit = vec! [ ];
+    let mut visit = vec![];
     for turn in turns {
         // println!("Turn: {:?}", turn);
         let old_state = state.clone();
@@ -61,10 +61,14 @@ fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {
         // walking along y
         if pos1.y < pos2.y {
             // walking forwards
-            (pos1.y .. pos2.y).map(|y| Position { x: pos1.x, y }).collect()
+            (pos1.y..pos2.y)
+                .map(|y| Position { x: pos1.x, y })
+                .collect()
         } else {
             // walking backwards
-            let mut v = (pos2.y + 1 .. pos1.y + 1).map(|y| Position { x: pos1.x, y }).collect::<Vec<_>>();
+            let mut v = (pos2.y + 1..pos1.y + 1)
+                .map(|y| Position { x: pos1.x, y })
+                .collect::<Vec<_>>();
             v.reverse();
             v
         }
@@ -73,10 +77,14 @@ fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {
         // walking along x
         if pos1.x < pos2.x {
             // walking forwards
-            (pos1.x .. pos2.x).map(|x| Position { x, y: pos1.y }).collect()
+            (pos1.x..pos2.x)
+                .map(|x| Position { x, y: pos1.y })
+                .collect()
         } else {
             // walking backwards
-            let mut v = (pos2.x + 1 .. pos1.x + 1).map(|x| Position { x, y: pos1.y }).collect::<Vec<_>>();
+            let mut v = (pos2.x + 1..pos1.x + 1)
+                .map(|x| Position { x, y: pos1.y })
+                .collect::<Vec<_>>();
             v.reverse();
             v
         }
