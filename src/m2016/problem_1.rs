@@ -94,10 +94,6 @@ impl State {
     fn distance(&self) -> i32 {
         return self.1.distance();
     }
-
-    fn same_place(&self, rhs: &State) -> bool {
-        return self.1 == rhs.1;
-    }
 }
 
 impl ::std::ops::Add<Turn> for Dir {
