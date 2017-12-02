@@ -11,15 +11,18 @@ pub fn run(contents: &Vec<Vec<String>>) {
     // for number in &numbers {
     //     println!("Number: {}", number);
     // }
-    for offset in [1, numbers.len() / 2].iter() {
-        let mut sum = 0;
-        for idx in 0..numbers.len() {
-            let x = numbers[idx];
-            let y = numbers[(idx + offset) % numbers.len()];
-            if x == y {
-                sum = sum + x;
-            }
-        }
-        println!("Sum: {}", sum);
-    }
+    calc(&numbers, 1);
+    calc(&numbers, numbers.len() / 2);
+}
+
+fn calc(numbers: &Vec<u32>, offset: usize) {
+    println!(
+        "{}",
+        numbers
+            .iter()
+            .zip(numbers.iter().skip(offset).chain(numbers.iter()))
+            .filter(|x| x.0 == x.1)
+            .map(|x| *x.0)
+            .sum::<u32>()
+    );
 }
