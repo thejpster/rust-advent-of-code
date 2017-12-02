@@ -4,6 +4,7 @@ use std::io::prelude::*;
 use std::env;
 
 mod problem_1;
+mod problem_2;
 
 fn main() {
     let (problem, filenames) = parse_args();
@@ -11,6 +12,7 @@ fn main() {
 
     match problem {
         1 => problem_1::run(&files),
+        2 => problem_2::run(&files),
         _ => panic!("Don't have that problem"),
     }
 }
