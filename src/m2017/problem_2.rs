@@ -3,18 +3,10 @@ pub fn run(contents: &Vec<Vec<String>>) {
     let mut cs = 0;
     let mut cs2 = 0;
     for line in spreadsheet {
-        let mut min = 1 << 31;
-        let mut max = 0;
         let cells: Vec<u32> = line.split_whitespace()
             .map(|x| x.parse().unwrap())
             .collect();
         for cell1 in &cells {
-            if *cell1 > max {
-                max = *cell1;
-            }
-            if *cell1 < min {
-                min = *cell1;
-            }
             for cell2 in &cells {
                 if cell1 != cell2 {
                     if *cell1 % *cell2 == 0 {
@@ -23,6 +15,8 @@ pub fn run(contents: &Vec<Vec<String>>) {
                 }
             }
         }
+        let max = cells.iter().cloned().max().unwrap();
+        let min = cells.iter().cloned().min().unwrap();
         cs = cs + (max - min);
     }
     println!("CS {}", cs);
