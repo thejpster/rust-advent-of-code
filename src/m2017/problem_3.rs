@@ -1,28 +1,31 @@
-/// Spirals
-///
-/// 1
-///
-/// 5 4 3
-/// 6 1 2
-/// 7 8 9
-///
-/// 17 16 15 14 13
-/// 18  5  4  3 12
-/// 19  6  1  2 11
-/// 20  7  8  9 10
-//  21 22 23 24 25
-///
-/// For any n x n grid (for some odd n), the n+2 x n+2 grid starts with (n.n)
-/// +1 and goes to (n+2).(n+2).
-///
-/// We need a 607 x 607 square.
-///
-/// 3          5                  7
-/// 11222222   1333444444444444   155555666666666666666666
-/// RULLDDRR | RUUULLLLDDDDRRRR | RUUUUULLLLLLDDDDDDRRRRRR
-///
-/// For square size N: 1 Right, N-2 Up, N-1 Left, N-1 Down, N-1 Right
-/// Total steps = 4(N-1).
+//! Spirals
+//!
+//! 1
+//!
+//! 5 4 3
+//! 6 1 2
+//! 7 8 9
+//!
+//! 17 16 15 14 13
+//! 18  5  4  3 12
+//! 19  6  1  2 11
+//! 20  7  8  9 10
+//! 21 22 23 24 25
+//!
+//! For any n x n grid (for some odd n), the n+2 x n+2 grid starts with (n.n)
+//! +1 and goes to (n+2).(n+2).
+//!
+//! We need a 607 x 607 square.
+//!
+//! 3          5                  7
+//! 11222222   1333444444444444   155555666666666666666666
+//! RULLDDRR | RUUULLLLDDDDRRRR | RUUUUULLLLLLDDDDDDRRRRRR
+//!
+//! For square size N: 1 Right, N-2 Up, N-1 Left, N-1 Down, N-1 Right
+//! Total steps = 4(N-1).
+
+use std::collections::HashMap;
+
 #[derive(Eq, PartialEq, Hash, Copy, Clone)]
 struct Position {
     x: i32,
@@ -33,6 +36,7 @@ struct Position {
 struct State {
     position: Position,
     num: usize,
+    cells: HashMap<Position, usize>,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -91,12 +95,29 @@ impl ::std::ops::Add<Move> for Position {
     }
 }
 
+impl Position {
+    fn neighbours(&self) -> Vec<Position> {
+        let mut result = Vec::new();
+        result.push(*self + Move::Up);
+        result.push(*self + Move::Up + Move::Right);
+        result.push(*self + Move::Right);
+        result.push(*self + Move::Down + Move::Right);
+        result.push(*self + Move::Down);
+        result.push(*self + Move::Down + Move::Left);
+        result.push(*self + Move::Left);
+        result.push(*self + Move::Up + Move::Left);
+        result
+    }
+}
+
 impl State {
     fn new() -> State {
-        let s = State {
+        let mut s = State {
             position: Position { x: 0, y: 0 },
             num: 1,
+            cells: HashMap::new(),
         };
+        s.cells.insert(s.position, s.num);
         s
     }
 
@@ -106,15 +127,44 @@ impl State {
         if self.num == 368078 {
             println!(
                 "{:?}, distance: {}",
-                self,
+                self.position,
                 self.position.x.abs() + self.position.y.abs()
             );
-            return;
+        }
+    }
+
+    fn go2(&mut self, movement: Move) -> Option<usize> {
+        self.position = self.position + movement;
+        let neighbours = self.position.neighbours();
+        self.num = 0;
+        for n in neighbours {
+            let inc = match self.cells.get(&n) {
+                None => 0,
+                Some(x) => *x,
+            };
+            self.num = self.num + inc;
+        }
+        // println!(
+        //     "Moved {:?}, to {:?} = {}",
+        //     movement,
+        //     self.position,
+        //     self.num
+        // );
+        self.cells.insert(self.position, self.num);
+        if self.num > 368078 {
+            Some(self.num)
+        } else {
+            None
         }
     }
 }
 
 pub fn run(_contents: &Vec<Vec<String>>) {
+    problem_a();
+    problem_b();
+}
+
+pub fn problem_a() {
     let mut state = State::new();
     for i in 1..304 {
         let edge_len = (i * 2) + 1;
@@ -122,7 +172,21 @@ pub fn run(_contents: &Vec<Vec<String>>) {
         // println!("Edge: {} => Path: {:?}", edge_len, path);
         for step in path {
             state.go(step);
-            // println!("State: {:?}", state);
+        }
+    }
+}
+
+pub fn problem_b() {
+    let mut state = State::new();
+    for i in 1..304 {
+        let edge_len = (i * 2) + 1;
+        let path = generate_path(edge_len);
+        // println!("Edge: {} => Path: {:?}", edge_len, path);
+        for step in path {
+            if let Some(x) = state.go2(step) {
+                println!("{}", x);
+                return;
+            }
         }
     }
 }

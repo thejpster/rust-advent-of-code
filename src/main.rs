@@ -172,7 +172,7 @@ fn main() {
 
 fn parse_args() -> Result<(u32, u32, Vec<String>), Error> {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 4 {
+    if args.len() < 3 {
         return Err(AppError::BadArgs(args[0].clone()).into());
     }
     let year = args[1].parse::<u32>().map_err(|_| {
