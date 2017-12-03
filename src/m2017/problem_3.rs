@@ -138,11 +138,7 @@ impl State {
         let neighbours = self.position.neighbours();
         self.num = 0;
         for n in neighbours {
-            let inc = match self.cells.get(&n) {
-                None => 0,
-                Some(x) => *x,
-            };
-            self.num = self.num + inc;
+            self.num = self.num + *self.cells.get(&n).unwrap_or(&0);
         }
         // println!(
         //     "Moved {:?}, to {:?} = {}",
