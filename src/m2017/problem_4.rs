@@ -6,9 +6,7 @@ pub fn run(contents: &Vec<Vec<String>>) {
         let mut dup = false;
         let mut hm: HashSet<String> = HashSet::new();
         for word in line.split_whitespace() {
-            if let Some(_) = hm.get(word) {
-                dup = true;
-            }
+            dup = dup | hm.contains(word);
             hm.insert(word.into());
         }
         if !dup {
@@ -21,13 +19,11 @@ pub fn run(contents: &Vec<Vec<String>>) {
         let mut dup = false;
         let mut hm: HashSet<String> = HashSet::new();
         for word in line.split_whitespace() {
-            let mut word = word.chars().collect::<Vec<_>>();
-            word.sort_by(|a, b| b.cmp(a));
-            let word: String = word.iter().clone().collect();
-            if let Some(_) = hm.get(&word) {
-                dup = true;
-            }
-            hm.insert(word.into());
+            let mut chars = word.chars().collect::<Vec<_>>();
+            chars.sort();
+            let word: String = chars.iter().collect();
+            dup = dup | hm.contains(&word);
+            hm.insert(word);
         }
         if !dup {
             count = count + 1;
