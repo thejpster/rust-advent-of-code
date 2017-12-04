@@ -6,3 +6,4 @@ authors = ["Jonathan Pallant <jonathan.pallant@cambridgeconsultants.com>"]
 [dependencies]
 failure = "0.1"
 failure_derive = "0.1"
+md5 = "0.3.6"
