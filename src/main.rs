@@ -6,9 +6,8 @@
 //
 // ****************************************************************************
 
-extern crate failure;
 #[macro_use]
-extern crate failure_derive;
+extern crate failure;
 extern crate md5;
 
 mod m2017;
