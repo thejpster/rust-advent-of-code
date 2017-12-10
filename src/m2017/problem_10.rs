@@ -5,20 +5,20 @@ pub fn run(contents: &Vec<Vec<String>>) {
     // Don't have inclusive range syntax, so manually push on the last item
     items.push(MAX);
 
-    part1(items.clone(), &contents[0][0]);
-    part2(items.clone(), &contents[0][0]);
+    part1(&mut items.clone(), &contents[0][0]);
+    part2(&mut items, &contents[0][0]);
 }
 
-fn part1(mut items: Vec<u8>, contents: &str) {
+fn part1(items: &mut [u8], contents: &str) {
     let lengths: Vec<u8> = contents.split(",").map(|x| x.parse().unwrap()).collect();
-    round(&mut items, &lengths, 1);
+    round(items, &lengths, 1);
     println!("{}", items[0] as u16 * items[1] as u16);
 }
 
-fn part2(mut items: Vec<u8>, contents: &str) {
+fn part2(items: &mut [u8], contents: &str) {
     let mut lengths: Vec<u8> = contents.bytes().collect();
     lengths.extend(&[17, 31, 73, 47, 23]);
-    round(&mut items, &lengths, 64);
+    round(items, &lengths, 64);
     let dense_hash: String = items[..]
         .chunks(16)
         .map(|c| c.iter().fold(0, |acc, x| acc ^ x))
@@ -27,7 +27,7 @@ fn part2(mut items: Vec<u8>, contents: &str) {
     println!("Dense Hash: {}", dense_hash);
 }
 
-fn round(items: &mut Vec<u8>, lengths: &Vec<u8>, count: usize) {
+fn round(items: &mut [u8], lengths: &[u8], count: usize) {
     let mut skip: usize = 0;
     let mut start: usize = 0;
     for _ in 0..count {
@@ -40,7 +40,7 @@ fn round(items: &mut Vec<u8>, lengths: &Vec<u8>, count: usize) {
     }
 }
 
-fn reverse(items: &mut Vec<u8>, mut start: usize, mut length: usize) {
+fn reverse(items: &mut [u8], mut start: usize, mut length: usize) {
     while length >= 2 {
         let end = (start + length - 1) % items.len();
         items.swap(start, end);
