@@ -1,6 +1,6 @@
-use ::std::ops::Add;
-use ::std::cmp::max;
-use ::std::default::Default;
+use std::ops::Add;
+use std::cmp::max;
+use std::default::Default;
 
 #[derive(Debug, Default)]
 struct Pos(i64, i64);
