@@ -23,7 +23,6 @@ pub fn run(contents: &Vec<Vec<String>>) {
         }
     }
 
-
     println!("Count ({}): {}", 0, count(&hm, &mut HashSet::new(), 0));
     let mut groups = 0;
     while hm.len() > 0 {
@@ -39,22 +38,13 @@ pub fn run(contents: &Vec<Vec<String>>) {
 }
 
 fn count(hm: &HashMap<u32, Vec<u32>>, seen: &mut HashSet<u32>, index: u32) -> u32 {
-    seen.insert(index);
-    match hm.get(&index) {
-        None => {
-            panic!("Non bi-dir association!")
-        }
-        Some(x) => {
-            let mut t = 1;
-            for v in x {
-                if !seen.contains(v) {
-                    seen.insert(*v);
-                    let c = count(hm, seen, *v);
-                    t = t + c;
-                }
-            }
-            t
+    assert!(seen.insert(index));
+    let x = hm.get(&index).expect("None bi-dir assoc");
+    let mut t = 1;
+    for v in x {
+        if !seen.contains(v) {
+            t = t + count(hm, seen, *v);
         }
     }
-
+    t
 }
