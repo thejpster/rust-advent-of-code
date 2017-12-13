@@ -32,11 +32,10 @@ fn run2(firewall: HashMap<usize, usize>, max: usize) {
         let mut fail = false;
         for depth in 0..max+1 {
             let time = sleep + depth;
-            if let Some(range) = firewall.get(&depth) {
-                if trip_scanner(time, *range) {
-                    fail = true;
-                    break;
-                }
+            let range = *firewall.get(&depth).unwrap_or(&0);
+            if trip_scanner(time, range) {
+                fail = true;
+                break;
             }
         }
         if fail == false {
@@ -47,6 +46,9 @@ fn run2(firewall: HashMap<usize, usize>, max: usize) {
 }
 
 fn trip_scanner(time: usize, range: usize) -> bool {
+    if range == 0 {
+        return false;
+    }
     if range == 1 {
         return true;
     }
