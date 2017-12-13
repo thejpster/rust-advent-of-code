@@ -11,11 +11,11 @@ pub fn run(contents: &Vec<Vec<String>>) {
         max = ::std::cmp::max(max, depth);
     }
 
-    run1(firewall.clone(), max);
-    run2(firewall, max);
+    run1(&firewall, max);
+    run2(&firewall, max);
 }
 
-fn run1(firewall: HashMap<usize, usize>, max: usize) {
+fn run1(firewall: &HashMap<usize, usize>, max: usize) {
     let mut score = 0;
     for depth in 0 .. max+1 {
         if let Some(range) = firewall.get(&depth) {
@@ -27,7 +27,7 @@ fn run1(firewall: HashMap<usize, usize>, max: usize) {
     println!("Part 1: {}", score);
 }
 
-fn run2(firewall: HashMap<usize, usize>, max: usize) {
+fn run2(firewall: &HashMap<usize, usize>, max: usize) {
     for sleep in 1..99999999 {
         let mut fail = false;
         for depth in 0..max+1 {
