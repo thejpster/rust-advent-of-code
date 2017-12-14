@@ -2,38 +2,31 @@ use std::collections::HashMap;
 
 pub fn run(contents: &Vec<Vec<String>>) {
     let mut firewall: HashMap<usize, usize> = HashMap::new();
-    let mut max: usize = 0;
     for layer in &contents[0] {
-        let mut parts = layer.split(": ");
-        let depth = parts.next().unwrap().parse::<usize>().unwrap();
-        let range = parts.next().unwrap().parse::<usize>().unwrap();
-        firewall.insert(depth, range);
-        max = ::std::cmp::max(max, depth);
+        let parts: Vec<usize> = layer.split(": ").map(|x| x.parse().unwrap()).collect();
+        firewall.insert(parts[0], parts[1]);
     }
 
-    run1(&firewall, max);
-    run2(&firewall, max);
+    run1(&firewall);
+    run2(&firewall);
 }
 
-fn run1(firewall: &HashMap<usize, usize>, max: usize) {
+fn run1(firewall: &HashMap<usize, usize>) {
     let mut score = 0;
-    for depth in 0 .. max+1 {
-        if let Some(range) = firewall.get(&depth) {
-            if trip_scanner(depth, *range) {
-                score = score + (depth * range);
-            }
+    for (depth, range) in firewall.iter() {
+        if trip_scanner(*depth, *range) {
+            score = score + (depth * range);
         }
     }
     println!("Part 1: {}", score);
 }
 
-fn run2(firewall: &HashMap<usize, usize>, max: usize) {
+fn run2(firewall: &HashMap<usize, usize>) {
     for sleep in 1..99999999 {
         let mut fail = false;
-        for depth in 0..max+1 {
+        for (depth, range) in firewall.iter() {
             let time = sleep + depth;
-            let range = *firewall.get(&depth).unwrap_or(&0);
-            if trip_scanner(time, range) {
+            if trip_scanner(time, *range) {
                 fail = true;
                 break;
             }
