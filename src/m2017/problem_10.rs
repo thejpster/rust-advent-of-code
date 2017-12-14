@@ -16,15 +16,19 @@ fn part1(items: &mut [u8], contents: &str) {
 }
 
 fn part2(items: &mut [u8], contents: &str) {
+    let hash = calculate(items, contents);
+    let dense_hash: String = hash.iter().map(|x| format!("{:02x}", x)).collect();
+    println!("Dense Hash: {}", dense_hash);
+}
+
+pub fn calculate(items: &mut [u8], contents: &str) -> Vec<u8> {
     let mut lengths: Vec<u8> = contents.bytes().collect();
     lengths.extend(&[17, 31, 73, 47, 23]);
     round(items, &lengths, 64);
-    let dense_hash: String = items[..]
+    items[..]
         .chunks(16)
         .map(|c| c.iter().fold(0, |acc, x| acc ^ x))
-        .map(|x| format!("{:02x}", x))
-        .collect();
-    println!("Dense Hash: {}", dense_hash);
+        .collect::<Vec<u8>>()
 }
 
 fn round(items: &mut [u8], lengths: &[u8], count: usize) {
