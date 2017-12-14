@@ -15,18 +15,14 @@ pub fn run(_contents: &Vec<Vec<String>>) {
     for line in 0..128 {
         let key = format!("ffayrhll-{}", line);
         let hash = calculate(&mut items.clone(), &key);
-        for (byte_idx, byte) in hash.iter().enumerate() {
-            for idx in 0..8 {
-                let shift = 7 - idx;
-                let bit = (byte >> shift) & 1u8;
-                print!("{}", if bit == 0u8 { "." } else { "#" });
-                if bit != 0u8 {
-                    let p = (line, (byte_idx as i32 * 8) + idx);
-                    board.insert(p);
-                }
+        let bitline = hash.iter().map(|b| format!("{:08b}", b)).collect::<String>();
+        println!("{}", bitline);
+        for (bit_idx, bit) in bitline.chars().enumerate() {
+            if bit == '1' {
+                let p = (line, bit_idx as i32);
+                board.insert(p);
             }
         }
-        println!();
     }
     println!("Count: {}", board.len());
 
