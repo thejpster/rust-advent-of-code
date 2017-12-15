@@ -32,5 +32,4 @@ pub fn run(_contents: &Vec<Vec<String>>) {
         }
     }
     println!("Count: {}", count);
-
 }

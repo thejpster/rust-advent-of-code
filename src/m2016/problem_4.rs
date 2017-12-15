@@ -12,12 +12,14 @@ pub fn run(contents: &Vec<Vec<String>>) {
 fn shift_string(s: &str, shift: u32) -> String {
     String::from_utf8(
         s.bytes()
-            .map(|c| if c == 45 {
-                32
-            } else {
-                let idx = c - 97;
-                let new_idx = (idx as u32 + shift) % 26;
-                (new_idx + 97) as u8
+            .map(|c| {
+                if c == 45 {
+                    32
+                } else {
+                    let idx = c - 97;
+                    let new_idx = (idx as u32 + shift) % 26;
+                    (new_idx + 97) as u8
+                }
             })
             .collect(),
     ).unwrap()
@@ -30,7 +32,6 @@ fn check_csum(word: &str) -> u32 {
     let roomdash = parts[0..parts.len() - 1].join("-");
     let mut hs = HashMap::new();
     for ch in room.chars() {
-
         let new_count = if let Some(c) = hs.get(&ch) { c + 1 } else { 1 };
         hs.insert(ch, new_count);
     }

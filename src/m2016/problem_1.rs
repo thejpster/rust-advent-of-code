@@ -72,7 +72,6 @@ fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {
             v.reverse();
             v
         }
-
     } else {
         // walking along x
         if pos1.x < pos2.x {
@@ -108,22 +107,18 @@ impl ::std::ops::Add<Turn> for Dir {
     type Output = Self;
     fn add(self, rhs: Turn) -> Self::Output {
         match rhs {
-            Turn::Left(_) => {
-                match self {
-                    Dir::Up => Dir::Left,
-                    Dir::Left => Dir::Down,
-                    Dir::Down => Dir::Right,
-                    Dir::Right => Dir::Up,
-                }
-            }
-            Turn::Right(_) => {
-                match self {
-                    Dir::Up => Dir::Right,
-                    Dir::Right => Dir::Down,
-                    Dir::Down => Dir::Left,
-                    Dir::Left => Dir::Up,
-                }
-            }
+            Turn::Left(_) => match self {
+                Dir::Up => Dir::Left,
+                Dir::Left => Dir::Down,
+                Dir::Down => Dir::Right,
+                Dir::Right => Dir::Up,
+            },
+            Turn::Right(_) => match self {
+                Dir::Up => Dir::Right,
+                Dir::Right => Dir::Down,
+                Dir::Down => Dir::Left,
+                Dir::Left => Dir::Up,
+            },
         }
     }
 }

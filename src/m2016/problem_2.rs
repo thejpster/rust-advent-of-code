@@ -33,58 +33,50 @@ impl ::std::ops::Add<char> for Pins {
 
     fn add(self, rhs: char) -> Pins {
         match rhs {
-            'U' => {
-                match self {
-                    Pins::One => Pins::One,
-                    Pins::Two => Pins::Two,
-                    Pins::Three => Pins::Three,
-                    Pins::Four => Pins::One,
-                    Pins::Five => Pins::Two,
-                    Pins::Six => Pins::Three,
-                    Pins::Seven => Pins::Four,
-                    Pins::Eight => Pins::Five,
-                    Pins::Nine => Pins::Six,
-                }
-            }
-            'D' => {
-                match self {
-                    Pins::One => Pins::Four,
-                    Pins::Two => Pins::Five,
-                    Pins::Three => Pins::Six,
-                    Pins::Four => Pins::Seven,
-                    Pins::Five => Pins::Eight,
-                    Pins::Six => Pins::Nine,
-                    Pins::Seven => Pins::Seven,
-                    Pins::Eight => Pins::Eight,
-                    Pins::Nine => Pins::Nine,
-                }
-            }
-            'L' => {
-                match self {
-                    Pins::One => Pins::One,
-                    Pins::Two => Pins::One,
-                    Pins::Three => Pins::Two,
-                    Pins::Four => Pins::Four,
-                    Pins::Five => Pins::Four,
-                    Pins::Six => Pins::Five,
-                    Pins::Seven => Pins::Seven,
-                    Pins::Eight => Pins::Seven,
-                    Pins::Nine => Pins::Eight,
-                }
-            }
-            'R' => {
-                match self {
-                    Pins::One => Pins::Two,
-                    Pins::Two => Pins::Three,
-                    Pins::Three => Pins::Three,
-                    Pins::Four => Pins::Five,
-                    Pins::Five => Pins::Six,
-                    Pins::Six => Pins::Six,
-                    Pins::Seven => Pins::Eight,
-                    Pins::Eight => Pins::Nine,
-                    Pins::Nine => Pins::Nine,
-                }
-            }
+            'U' => match self {
+                Pins::One => Pins::One,
+                Pins::Two => Pins::Two,
+                Pins::Three => Pins::Three,
+                Pins::Four => Pins::One,
+                Pins::Five => Pins::Two,
+                Pins::Six => Pins::Three,
+                Pins::Seven => Pins::Four,
+                Pins::Eight => Pins::Five,
+                Pins::Nine => Pins::Six,
+            },
+            'D' => match self {
+                Pins::One => Pins::Four,
+                Pins::Two => Pins::Five,
+                Pins::Three => Pins::Six,
+                Pins::Four => Pins::Seven,
+                Pins::Five => Pins::Eight,
+                Pins::Six => Pins::Nine,
+                Pins::Seven => Pins::Seven,
+                Pins::Eight => Pins::Eight,
+                Pins::Nine => Pins::Nine,
+            },
+            'L' => match self {
+                Pins::One => Pins::One,
+                Pins::Two => Pins::One,
+                Pins::Three => Pins::Two,
+                Pins::Four => Pins::Four,
+                Pins::Five => Pins::Four,
+                Pins::Six => Pins::Five,
+                Pins::Seven => Pins::Seven,
+                Pins::Eight => Pins::Seven,
+                Pins::Nine => Pins::Eight,
+            },
+            'R' => match self {
+                Pins::One => Pins::Two,
+                Pins::Two => Pins::Three,
+                Pins::Three => Pins::Three,
+                Pins::Four => Pins::Five,
+                Pins::Five => Pins::Six,
+                Pins::Six => Pins::Six,
+                Pins::Seven => Pins::Eight,
+                Pins::Eight => Pins::Nine,
+                Pins::Nine => Pins::Nine,
+            },
             _ => panic!("Unsupported movement"),
         }
     }
@@ -100,74 +92,66 @@ impl ::std::ops::Add<char> for Pins2 {
 
     fn add(self, rhs: char) -> Pins2 {
         match rhs {
-            'U' => {
-                match self {
-                    Pins2::One => Pins2::One,
-                    Pins2::Two => Pins2::Two,
-                    Pins2::Three => Pins2::One,
-                    Pins2::Four => Pins2::Four,
-                    Pins2::Five => Pins2::Five,
-                    Pins2::Six => Pins2::Two,
-                    Pins2::Seven => Pins2::Three,
-                    Pins2::Eight => Pins2::Four,
-                    Pins2::Nine => Pins2::Nine,
-                    Pins2::A => Pins2::Six,
-                    Pins2::B => Pins2::Seven,
-                    Pins2::C => Pins2::Eight,
-                    Pins2::D => Pins2::B,
-                }
-            }
-            'D' => {
-                match self {
-                    Pins2::One => Pins2::Three,
-                    Pins2::Two => Pins2::Six,
-                    Pins2::Three => Pins2::Seven,
-                    Pins2::Four => Pins2::Eight,
-                    Pins2::Five => Pins2::Five,
-                    Pins2::Six => Pins2::A,
-                    Pins2::Seven => Pins2::B,
-                    Pins2::Eight => Pins2::C,
-                    Pins2::Nine => Pins2::Nine,
-                    Pins2::A => Pins2::A,
-                    Pins2::B => Pins2::D,
-                    Pins2::C => Pins2::C,
-                    Pins2::D => Pins2::D,
-                }
-            }
-            'L' => {
-                match self {
-                    Pins2::One => Pins2::One,
-                    Pins2::Two => Pins2::Two,
-                    Pins2::Three => Pins2::Two,
-                    Pins2::Four => Pins2::Three,
-                    Pins2::Five => Pins2::Five,
-                    Pins2::Six => Pins2::Five,
-                    Pins2::Seven => Pins2::Six,
-                    Pins2::Eight => Pins2::Seven,
-                    Pins2::Nine => Pins2::Eight,
-                    Pins2::A => Pins2::A,
-                    Pins2::B => Pins2::A,
-                    Pins2::C => Pins2::B,
-                    Pins2::D => Pins2::D,
-                }
-            }
-            'R' => {
-                match self {
-                    Pins2::One => Pins2::One,
-                    Pins2::Two => Pins2::Three,
-                    Pins2::Three => Pins2::Four,
-                    Pins2::Four => Pins2::Four,
-                    Pins2::Five => Pins2::Six,
-                    Pins2::Six => Pins2::Seven,
-                    Pins2::Seven => Pins2::Eight,
-                    Pins2::Eight => Pins2::Nine,
-                    Pins2::Nine => Pins2::Nine,
-                    Pins2::A => Pins2::B,
-                    Pins2::B => Pins2::C,
-                    Pins2::C => Pins2::C,
-                    Pins2::D => Pins2::D,
-                }
-            }
+            'U' => match self {
+                Pins2::One => Pins2::One,
+                Pins2::Two => Pins2::Two,
+                Pins2::Three => Pins2::One,
+                Pins2::Four => Pins2::Four,
+                Pins2::Five => Pins2::Five,
+                Pins2::Six => Pins2::Two,
+                Pins2::Seven => Pins2::Three,
+                Pins2::Eight => Pins2::Four,
+                Pins2::Nine => Pins2::Nine,
+                Pins2::A => Pins2::Six,
+                Pins2::B => Pins2::Seven,
+                Pins2::C => Pins2::Eight,
+                Pins2::D => Pins2::B,
+            },
+            'D' => match self {
+                Pins2::One => Pins2::Three,
+                Pins2::Two => Pins2::Six,
+                Pins2::Three => Pins2::Seven,
+                Pins2::Four => Pins2::Eight,
+                Pins2::Five => Pins2::Five,
+                Pins2::Six => Pins2::A,
+                Pins2::Seven => Pins2::B,
+                Pins2::Eight => Pins2::C,
+                Pins2::Nine => Pins2::Nine,
+                Pins2::A => Pins2::A,
+                Pins2::B => Pins2::D,
+                Pins2::C => Pins2::C,
+                Pins2::D => Pins2::D,
+            },
+            'L' => match self {
+                Pins2::One => Pins2::One,
+                Pins2::Two => Pins2::Two,
+                Pins2::Three => Pins2::Two,
+                Pins2::Four => Pins2::Three,
+                Pins2::Five => Pins2::Five,
+                Pins2::Six => Pins2::Five,
+                Pins2::Seven => Pins2::Six,
+                Pins2::Eight => Pins2::Seven,
+                Pins2::Nine => Pins2::Eight,
+                Pins2::A => Pins2::A,
+                Pins2::B => Pins2::A,
+                Pins2::C => Pins2::B,
+                Pins2::D => Pins2::D,
+            },
+            'R' => match self {
+                Pins2::One => Pins2::One,
+                Pins2::Two => Pins2::Three,
+                Pins2::Three => Pins2::Four,
+                Pins2::Four => Pins2::Four,
+                Pins2::Five => Pins2::Six,
+                Pins2::Six => Pins2::Seven,
+                Pins2::Seven => Pins2::Eight,
+                Pins2::Eight => Pins2::Nine,
+                Pins2::Nine => Pins2::Nine,
+                Pins2::A => Pins2::B,
+                Pins2::B => Pins2::C,
+                Pins2::C => Pins2::C,
+                Pins2::D => Pins2::D,
+            },
             _ => panic!("Unsupported movement"),
         }
     }

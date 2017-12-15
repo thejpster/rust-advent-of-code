@@ -26,16 +26,15 @@ fn play(steps_joined: &str) {
     let mut max_distance = 0;
     for step in steps {
         // [Axial co-ords](https://www.redblobgames.com/grids/hexagons/#coordinates-axial)
-        pos = pos +
-            match step {
-                "n" => Pos(0, -1),
-                "s" => Pos(0, 1),
-                "ne" => Pos(1, -1),
-                "nw" => Pos(-1, 0),
-                "se" => Pos(1, 0),
-                "sw" => Pos(-1, 1),
-                _ => unreachable!(),
-            };
+        pos = pos + match step {
+            "n" => Pos(0, -1),
+            "s" => Pos(0, 1),
+            "ne" => Pos(1, -1),
+            "nw" => Pos(-1, 0),
+            "se" => Pos(1, 0),
+            "sw" => Pos(-1, 1),
+            _ => unreachable!(),
+        };
         max_distance = max(max_distance, pos.distance());
     }
     println!(
