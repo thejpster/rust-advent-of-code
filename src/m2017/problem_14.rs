@@ -15,7 +15,9 @@ pub fn run(_contents: &Vec<Vec<String>>) {
     for line in 0..128 {
         let key = format!("ffayrhll-{}", line);
         let hash = calculate(&mut items.clone(), &key);
-        let bitline = hash.iter().map(|b| format!("{:08b}", b)).collect::<String>();
+        let bitline = hash.iter()
+            .map(|b| format!("{:08b}", b))
+            .collect::<String>();
         println!("{}", bitline);
         for (bit_idx, bit) in bitline.chars().enumerate() {
             if bit == '1' {
@@ -35,7 +37,7 @@ pub fn run(_contents: &Vec<Vec<String>>) {
 }
 
 fn find_unset(board: &Board) -> Option<Position> {
-    return board.iter().next().cloned()
+    return board.iter().next().cloned();
 }
 
 fn fill(board: &mut Board, pos: Position) {
