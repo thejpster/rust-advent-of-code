@@ -1,4 +1,3 @@
-
 pub fn run(_contents: &Vec<Vec<String>>) {
     const FACTOR_A: u64 = 16807;
     const FACTOR_B: u64 = 48271;
