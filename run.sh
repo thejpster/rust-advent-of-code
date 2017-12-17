@@ -3,11 +3,14 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-SESSION=$(cat session.txt)
+if [ $# -ne 0 ]
+then
+    TEST="_test"
+else
+	TEST=""
+fi
 
 YEAR=$(date +%Y)
 DAY=$(date +%d)
-echo "Fetching http://adventofcode.com/${YEAR}/day/${DAY}/input to inputs/${YEAR}_${DAY}.txt"
-curl "http://adventofcode.com/${YEAR}/day/${DAY}/input" -H "Cookie: session=$SESSION" > inputs/${YEAR}_${DAY}.txt
-git add inputs/2017_${DAY}.txt
-git status
+echo cargo run ${YEAR} ${DAY} ./inputs/${YEAR}_${DAY}${TEST}.txt
+cargo run ${YEAR} ${DAY} ./inputs/${YEAR}_${DAY}${TEST}.txt
