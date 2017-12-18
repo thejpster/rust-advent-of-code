@@ -1,88 +1,12 @@
 use std::collections::{HashMap, VecDeque};
 
-struct CpuSingle<'a> {
-    registers: HashMap<&'a str, i64>,
-    snd: i64,
-}
-
-impl<'a> CpuSingle<'a> {
-    fn new() -> CpuSingle<'a> {
-        let mut c = CpuSingle {
-            registers: HashMap::new(),
-            snd: 0,
-        };
-        c.set("a", "0");
-        c.set("b", "0");
-        c.set("f", "0");
-        c.set("i", "0");
-        c.set("p", "0");
-        c
-    }
-
-    fn get_reg(&self, reg: &'a str) -> i64 {
-        match reg.parse() {
-            Ok(x) => x,
-            Err(_) => *self.registers.get(reg).unwrap(),
-        }
-    }
-
-    fn set(&mut self, reg: &'a str, reg2: &'a str) {
-        let x = self.get_reg(reg2);
-        self.registers.insert(reg, x);
-    }
-
-    fn mul(&mut self, reg: &'a str, reg2: &'a str) {
-        let mut x = self.get_reg(reg);
-        let y = self.get_reg(reg2);
-        x = x * y;
-        self.registers.insert(reg, x);
-    }
-
-    fn add(&mut self, reg: &'a str, reg2: &'a str) {
-        let mut x = self.get_reg(reg);
-        let y = self.get_reg(reg2);
-        x = x + y;
-        self.registers.insert(reg, x);
-    }
-
-    fn modulo(&mut self, reg: &'a str, reg2: &'a str) {
-        let mut x = self.get_reg(reg);
-        let y = self.get_reg(reg2);
-        x = x % y;
-        self.registers.insert(reg, x);
-    }
-
-    fn jgz(&mut self, reg: &'a str, reg2: &'a str) -> i64 {
-        let x = self.get_reg(reg);
-        if x > 0 {
-            self.get_reg(reg2)
-        } else {
-            1
-        }
-    }
-
-    fn snd(&mut self, reg: &'a str) {
-        let s = self.get_reg(reg);
-        self.snd = s;
-    }
-
-    fn rcv(&mut self, reg: &'a str) -> bool {
-        let s = self.get_reg(reg);
-        if s != 0 {
-            println!("Rcv: {}", self.snd);
-            true
-        } else {
-            false
-        }
-    }
-}
-
 #[derive(Debug)]
 struct Cpu<'a> {
     registers: HashMap<&'a str, i64>,
     queue: VecDeque<i64>,
     pc: usize,
     count: usize,
+    snd: i64,
 }
 
 impl<'a> Cpu<'a> {
@@ -90,6 +14,7 @@ impl<'a> Cpu<'a> {
         let mut c = Cpu {
             registers: HashMap::new(),
             pc: 0,
+            snd: 0,
             queue: VecDeque::new(),
             count: 0,
         };
@@ -144,6 +69,23 @@ impl<'a> Cpu<'a> {
         self.pc = (self.pc as i64 + jump) as usize;
     }
 
+    fn snd1(&mut self, reg: &'a str) {
+        let s = self.get_reg(reg);
+        self.snd = s;
+        self.pc = self.pc + 1;
+    }
+
+    fn rcv1(&mut self, reg: &'a str) -> bool {
+        let s = self.get_reg(reg);
+        self.pc = self.pc + 1;
+        if s != 0 {
+            println!("Rcv: {}", self.snd);
+            true
+        } else {
+            false
+        }
+    }
+
     fn snd(&mut self, reg: &'a str, cpu: &mut Cpu) {
         let s = self.get_reg(reg);
         cpu.queue.push_back(s);
@@ -157,6 +99,39 @@ impl<'a> Cpu<'a> {
             self.pc = self.pc + 1;
         }
     }
+
+    fn run1(&mut self, line: &'a str) -> bool {
+        let parts: Vec<&str> = line.split_whitespace().collect();
+        // println!("Running #{}: {:?}", self.pc, parts);
+        match parts[0].as_ref() {
+            "set" => self.set(parts[1], parts[2]),
+            "mul" => self.mul(parts[1], parts[2]),
+            "jgz" => self.jgz(parts[1], parts[2]),
+            "add" => self.add(parts[1], parts[2]),
+            "snd" => self.snd1(parts[1]),
+            "rcv" => if self.rcv1(parts[1]) {
+            	return true; }
+            	,
+            "mod" => self.modulo(parts[1], parts[2]),
+            _ => panic!("Unsuported line: {:?}", parts),
+        }
+        false
+    }
+
+    fn run2(&mut self, line: &'a str, other: &mut Cpu) {
+        let parts: Vec<&str> = line.split_whitespace().collect();
+        // println!("Running #{}: {:?}", self.pc, parts);
+        match parts[0].as_ref() {
+            "set" => self.set(parts[1], parts[2]),
+            "mul" => self.mul(parts[1], parts[2]),
+            "jgz" => self.jgz(parts[1], parts[2]),
+            "add" => self.add(parts[1], parts[2]),
+            "snd" => self.snd(parts[1], other),
+            "rcv" => self.rcv(parts[1]),
+            "mod" => self.modulo(parts[1], parts[2]),
+            _ => panic!("Unsuported line: {:?}", parts),
+        }
+    }
 }
 
 pub fn run(contents: &Vec<Vec<String>>) {
@@ -165,26 +140,12 @@ pub fn run(contents: &Vec<Vec<String>>) {
 }
 
 fn run1(contents: &Vec<Vec<String>>) {
-    let mut cpu = CpuSingle::new();
-    let mut pc: i64 = 0;
+    let mut cpu = Cpu::new(0);
     loop {
-        let line = &contents[0][pc as usize];
-        let parts: Vec<&str> = line.split_whitespace().collect();
-        let mut offset = 1;
-        // println!("Running #{}: {:?}", pc, parts);
-        match parts[0].as_ref() {
-            "set" => cpu.set(parts[1], parts[2]),
-            "mul" => cpu.mul(parts[1], parts[2]),
-            "jgz" => offset = cpu.jgz(parts[1], parts[2]),
-            "add" => cpu.add(parts[1], parts[2]),
-            "snd" => cpu.snd(parts[1]),
-            "rcv" => if cpu.rcv(parts[1]) {
-                break;
-            },
-            "mod" => cpu.modulo(parts[1], parts[2]),
-            _ => panic!("Unsuported line: {:?}", parts),
+        let line = &contents[0][cpu.pc];
+        if cpu.run1(line) {
+        	break;
         }
-        pc = pc + offset;
     }
 }
 
@@ -200,19 +161,8 @@ fn run2(contents: &Vec<Vec<String>>) {
                 _ => panic!(),
             };
             let line = &contents[0][cpu.pc];
-            let parts: Vec<&str> = line.split_whitespace().collect();
-            // println!("Running #{} on {}: {:?}", cpu.pc, idx, parts);
             old_pcs[idx] = cpu.pc;
-            match parts[0].as_ref() {
-                "set" => cpu.set(parts[1], parts[2]),
-                "mul" => cpu.mul(parts[1], parts[2]),
-                "jgz" => cpu.jgz(parts[1], parts[2]),
-                "add" => cpu.add(parts[1], parts[2]),
-                "snd" => cpu.snd(parts[1], other),
-                "rcv" => cpu.rcv(parts[1]),
-                "mod" => cpu.modulo(parts[1], parts[2]),
-                _ => panic!("Unsuported line: {:?}", parts),
-            }
+            cpu.run2(line, other);
         }
         if old_pcs[0] == cpu0.pc && old_pcs[1] == cpu1.pc {
             break;
