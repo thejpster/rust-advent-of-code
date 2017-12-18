@@ -1,5 +1,5 @@
-pub fn run(_contents: &Vec<Vec<String>>) {
-    let input = 335;
+pub fn run(contents: &Vec<Vec<String>>) {
+    let input: usize = contents[0][0].parse().unwrap();
     let mut spinlocks: Vec<u32> = vec![0];
     let mut position = 0usize;
     for i in 1u32..2018u32 {
