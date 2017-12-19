@@ -26,8 +26,8 @@ fn shift_string(s: &str, shift: u32) -> String {
 }
 
 fn check_csum(word: &str) -> u32 {
-    let parts: Vec<&str> = word.split("-").collect();
-    let tail: Vec<&str> = parts[parts.len() - 1].split("[").collect();
+    let parts: Vec<&str> = word.split('-').collect();
+    let tail: Vec<&str> = parts[parts.len() - 1].split('[').collect();
     let room = parts[0..parts.len() - 1].join("");
     let roomdash = parts[0..parts.len() - 1].join("-");
     let mut hs = HashMap::new();

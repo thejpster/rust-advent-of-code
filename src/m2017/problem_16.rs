@@ -61,7 +61,7 @@ impl Buffer {
 }
 
 pub fn run(contents: &[Vec<String>]) {
-    let steps = contents[0][0].split(",");
+    let steps = contents[0][0].split(',');
     let steps: Vec<Move> = steps.map(|x| decode(x)).collect();
     let mut buffer = Buffer::new(16);
     let mut seen: Vec<String> = Vec::new();
@@ -94,11 +94,11 @@ fn decode(input: &str) -> Move {
     match &input[0..1] {
         "s" => Move::Spin(input[1..].parse().unwrap()),
         "x" => {
-            let mut parts = input[1..].split("/").map(|x| x.parse::<usize>().unwrap());
+            let mut parts = input[1..].split('/').map(|x| x.parse::<usize>().unwrap());
             Move::Exchange(parts.next().unwrap(), parts.next().unwrap())
         }
         "p" => {
-            let mut parts = input[1..].split("/").map(|x| x.chars().nth(0).unwrap());
+            let mut parts = input[1..].split('/').map(|x| x.chars().nth(0).unwrap());
             Move::Partner(parts.next().unwrap(), parts.next().unwrap())
         }
         _ => panic!("Bad command"),

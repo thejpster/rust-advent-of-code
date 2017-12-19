@@ -21,7 +21,7 @@ pub fn run(contents: &[Vec<String>]) {
 }
 
 fn play(steps_joined: &str) {
-    let steps: Vec<&str> = steps_joined.split(",").collect();
+    let steps: Vec<&str> = steps_joined.split(',').collect();
     let mut pos = Pos::default();
     let mut max_distance = 0;
     for step in steps {

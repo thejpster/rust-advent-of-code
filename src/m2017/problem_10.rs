@@ -10,7 +10,7 @@ pub fn run(contents: &[Vec<String>]) {
 }
 
 fn part1(items: &mut [u8], contents: &str) {
-    let lengths: Vec<u8> = contents.split(",").map(|x| x.parse().unwrap()).collect();
+    let lengths: Vec<u8> = contents.split(',').map(|x| x.parse().unwrap()).collect();
     round(items, &lengths, 1);
     println!("{}", items[0] as u16 * items[1] as u16);
 }
