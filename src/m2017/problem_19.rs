@@ -86,13 +86,14 @@ pub fn run(contents: &Vec<Vec<String>>) {
         row: 0,
         col: map[0].iter().position(|&sq| sq == Piece::UpDown).unwrap(),
     };
+    let mut letters = String::new();
     let mut steps = 0;
     let mut dir = Direction::Down;
     loop {
         if let Piece::Letter(ch) = map[location.row][location.col] {
-            println!("Found: {}", ch);
+            letters.push(ch);
         }
-        println!("At {:?} = {}", location, map[location.row][location.col]);
+        // println!("At {:?} = {}", location, map[location.row][location.col]);
         if let Some(d) = calc_new_dir(&map, &location, dir) {
             dir = d;
             steps = steps + 1;
@@ -101,6 +102,7 @@ pub fn run(contents: &Vec<Vec<String>>) {
             break;
         }
     }
+    println!("Letters: {}", letters);
     println!("Steps: {}", steps);
 }
 
@@ -114,16 +116,12 @@ fn calc_new_dir(map: &Vec<Vec<Piece>>, location: &Location, dir: Direction) -> O
             match dir {
                 Direction::Up | Direction::Down => {
                     if Piece::LeftRight == map[location.row][location.col + 1] {
-                        println!("Heading Right!");
                         Some(Direction::Right)
                     } else if let Piece::Letter(_) = map[location.row][location.col + 1] {
-                        println!("Heading Right!");
                         Some(Direction::Right)
                     } else if Piece::LeftRight == map[location.row][location.col - 1] {
-                        println!("Heading Left!");
                         Some(Direction::Left)
                     } else if let Piece::Letter(_) = map[location.row][location.col - 1] {
-                        println!("Heading Left!");
                         Some(Direction::Left)
                     } else {
                         panic!("Am lost!");
@@ -131,16 +129,12 @@ fn calc_new_dir(map: &Vec<Vec<Piece>>, location: &Location, dir: Direction) -> O
                 }
                 Direction::Left | Direction::Right => {
                     if Piece::UpDown == map[location.row - 1][location.col] {
-                        println!("Heading Up!");
                         Some(Direction::Up)
                     } else if let Piece::Letter(_) = map[location.row - 1][location.col] {
-                        println!("Heading Up!");
                         Some(Direction::Up)
                     } else if Piece::UpDown == map[location.row + 1][location.col] {
-                        println!("Heading Down!");
                         Some(Direction::Down)
                     } else if let Piece::Letter(_) = map[location.row + 1][location.col] {
-                        println!("Heading Down!");
                         Some(Direction::Down)
                     } else {
                         panic!("Am lost!");
@@ -149,7 +143,6 @@ fn calc_new_dir(map: &Vec<Vec<Piece>>, location: &Location, dir: Direction) -> O
             }
         }
         _ => {
-            println!("Carrying on...");
             Some(dir) // keep going
         }
     }
