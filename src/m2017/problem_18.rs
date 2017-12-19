@@ -110,8 +110,8 @@ impl<'a> Cpu<'a> {
             "add" => self.add(parts[1], parts[2]),
             "snd" => self.snd1(parts[1]),
             "rcv" => if self.rcv1(parts[1]) {
-            	return true; }
-            	,
+                return true;
+            },
             "mod" => self.modulo(parts[1], parts[2]),
             _ => panic!("Unsuported line: {:?}", parts),
         }
@@ -144,7 +144,7 @@ fn run1(contents: &Vec<Vec<String>>) {
     loop {
         let line = &contents[0][cpu.pc];
         if cpu.run1(line) {
-        	break;
+            break;
         }
     }
 }
