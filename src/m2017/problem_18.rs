@@ -134,12 +134,12 @@ impl<'a> Cpu<'a> {
     }
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     run1(contents);
     run2(contents);
 }
 
-fn run1(contents: &Vec<Vec<String>>) {
+fn run1(contents: &[Vec<String>]) {
     let mut cpu = Cpu::new(0);
     loop {
         let line = &contents[0][cpu.pc];
@@ -149,7 +149,7 @@ fn run1(contents: &Vec<Vec<String>>) {
     }
 }
 
-fn run2(contents: &Vec<Vec<String>>) {
+fn run2(contents: &[Vec<String>]) {
     let mut cpu0 = Cpu::new(0);
     let mut cpu1 = Cpu::new(1);
     let mut old_pcs = [0, 0];

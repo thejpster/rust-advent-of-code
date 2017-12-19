@@ -60,7 +60,7 @@ impl Buffer {
     }
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let steps = contents[0][0].split(",");
     let steps: Vec<Move> = steps.map(|x| decode(x)).collect();
     let mut buffer = Buffer::new(16);

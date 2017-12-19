@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut count = 0;
     for line in &contents[0] {
         let mut dup = false;

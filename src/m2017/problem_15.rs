@@ -1,4 +1,4 @@
-pub fn run(_contents: &Vec<Vec<String>>) {
+pub fn run(_contents: &[Vec<String>]) {
     const FACTOR_A: u64 = 16807;
     const FACTOR_B: u64 = 48271;
     const LIMIT: u64 = 2147483647;

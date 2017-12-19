@@ -1,4 +1,4 @@
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let input: usize = contents[0][0].parse().unwrap();
     let mut spinlocks: Vec<u32> = vec![0];
     let mut position = 0usize;

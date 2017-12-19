@@ -1,4 +1,4 @@
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     for line in &contents[0] {
         let mut skip = false;
         let mut garbage = false;

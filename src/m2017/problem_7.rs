@@ -6,7 +6,7 @@ struct Node {
     children: Vec<String>,
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut children_set: HashSet<String> = HashSet::new();
     let mut nodes: HashMap<String, Node> = HashMap::new();
     for line in &contents[0] {

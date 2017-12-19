@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut firewall: HashMap<usize, usize> = HashMap::new();
     for layer in &contents[0] {
         let parts: Vec<usize> = layer.split(": ").map(|x| x.parse().unwrap()).collect();

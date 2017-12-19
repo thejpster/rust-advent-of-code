@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut registers = HashMap::new();
     let mut highest = ("x", 0);
     for line in &contents[0] {

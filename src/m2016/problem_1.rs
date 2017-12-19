@@ -21,7 +21,7 @@ struct Position {
 #[derive(Debug, Clone, Copy)]
 struct State(Dir, Position);
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     // Big one line string
     let first_line = &contents[0][0];
     let mut state = State(Dir::Up, Position { x: 0, y: 0 });

@@ -1,4 +1,4 @@
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let spreadsheet = &contents[0];
     let mut cs = 0;
     let mut cs2 = 0;

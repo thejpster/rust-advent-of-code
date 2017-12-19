@@ -1,6 +1,6 @@
 const MAX: u8 = 255;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut items: Vec<u8> = (0..MAX).collect();
     // Don't have inclusive range syntax, so manually push on the last item
     items.push(MAX);

@@ -1,4 +1,4 @@
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     // Big one line string
     let number_line = &contents[0][0];
     let numbers: Vec<u32> = number_line

@@ -3,7 +3,7 @@ use md5;
 const DOOR_ID: &'static str = "wtnhxymk";
 // const DOOR_ID:&'static str = "abc";
 
-pub fn run(_contents: &Vec<Vec<String>>) {
+pub fn run(_contents: &[Vec<String>]) {
     let mut count = 0;
     for i in 1..99999999 {
         // println!("i = {}", i);

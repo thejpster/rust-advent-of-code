@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut count = 0;
     for room in &contents[0] {
         // println!("Line: {}", room);

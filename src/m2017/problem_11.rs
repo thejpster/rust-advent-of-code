@@ -12,7 +12,7 @@ impl Add<Pos> for Pos {
     }
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     play("ne,ne,ne");
     play("ne,ne,sw,sw");
     play("ne,ne,s,s");

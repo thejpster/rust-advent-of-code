@@ -58,7 +58,7 @@ impl ::std::fmt::Display for Piece {
     }
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut map: Vec<Vec<Piece>> = Vec::new();
     for line in &contents[0] {
         let mut line_vec = Vec::new();

@@ -157,7 +157,7 @@ impl ::std::ops::Add<char> for Pins2 {
     }
 }
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut digit = Pins::Five;
     for line in &contents[0] {
         for step in line.chars() {

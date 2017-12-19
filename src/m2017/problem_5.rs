@@ -1,4 +1,4 @@
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut jumps: Vec<i64> = contents[0].iter().map(|x| x.parse().unwrap()).collect();
     let mut idx: i64 = 0;
     let mut steps = 0;

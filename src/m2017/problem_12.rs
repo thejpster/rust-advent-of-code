@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::collections::hash_map::Entry;
 
-pub fn run(contents: &Vec<Vec<String>>) {
+pub fn run(contents: &[Vec<String>]) {
     let mut hm: HashMap<u32, Vec<u32>> = HashMap::new();
     for line in &contents[0] {
         let mut parts = line.split(" <-> ");

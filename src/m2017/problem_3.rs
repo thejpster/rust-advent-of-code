@@ -155,7 +155,7 @@ impl State {
     }
 }
 
-pub fn run(_contents: &Vec<Vec<String>>) {
+pub fn run(_contents: &[Vec<String>]) {
     problem_a();
     problem_b();
 }

@@ -1,3 +1,3 @@
-pub fn run(_contents: &Vec<Vec<String>>) {
+pub fn run(_contents: &[Vec<String>]) {
     unimplemented!();
 }
