@@ -15,7 +15,7 @@ pub fn run(contents: &[Vec<String>]) {
     calc(&numbers, numbers.len() / 2);
 }
 
-fn calc(numbers: &Vec<u32>, offset: usize) {
+fn calc(numbers: &[u32], offset: usize) {
     println!(
         "{}",
         numbers

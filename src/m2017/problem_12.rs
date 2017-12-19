@@ -25,7 +25,7 @@ pub fn run(contents: &[Vec<String>]) {
 
     println!("Count ({}): {}", 0, count(&hm, &mut HashSet::new(), 0));
     let mut groups = 0;
-    while hm.len() > 0 {
+    while !hm.is_empty() {
         let mut seen = HashSet::new();
         let search = *hm.keys().next().unwrap();
         count(&hm, &mut seen, search);
@@ -43,7 +43,7 @@ fn count(hm: &HashMap<u32, Vec<u32>>, seen: &mut HashSet<u32>, index: u32) -> u3
     let mut t = 1;
     for v in x {
         if !seen.contains(v) {
-            t = t + count(hm, seen, *v);
+            t += count(hm, seen, *v);
         }
     }
     t

@@ -72,7 +72,7 @@ fn main() {
         Ok(v) => v,
         Err(e) => {
             eprintln!("Error parsing arguments: {}", e);
-            std::process::exit(1);
+            std::process::exit(1)
         }
     };
     let files: Vec<Vec<String>> = match filenames
@@ -83,7 +83,7 @@ fn main() {
         Ok(v) => v,
         Err(e) => {
             eprintln!("Error opening file: {}", e);
-            std::process::exit(1);
+            std::process::exit(1)
         }
     };
     match year {
@@ -114,7 +114,7 @@ fn main() {
             24 => m2016::problem_24::run(&files),
             _ => {
                 eprintln!("Don't have problem {} in year {}", problem, year);
-                std::process::exit(1);
+                std::process::exit(1)
             }
         },
         2017 => match problem {
@@ -144,12 +144,12 @@ fn main() {
             24 => m2017::problem_24::run(&files),
             _ => {
                 eprintln!("Don't have problem {} in year {}", problem, year);
-                std::process::exit(1);
+                std::process::exit(1)
             }
         },
         _ => {
             eprintln!("Don't have year {}", year);
-            std::process::exit(1);
+            std::process::exit(1)
         }
     }
 }
@@ -172,7 +172,7 @@ fn parse_args() -> Result<(u32, u32, Vec<String>), Error> {
         .parse::<u32>()
         .map_err(|_| AppError::BadNumber(args[2].clone()))?;
     let file_names = args[3..].to_vec();
-    return Ok((year, problem_number, file_names));
+    Ok((year, problem_number, file_names))
 }
 
 fn open(filename: &str) -> Result<Vec<String>, Error> {

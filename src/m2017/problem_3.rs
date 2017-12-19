@@ -122,9 +122,9 @@ impl State {
     }
 
     fn go(&mut self, movement: Move) {
-        self.num = self.num + 1;
+        self.num += 1;
         self.position = self.position + movement;
-        if self.num == 368078 {
+        if self.num == 368_078 {
             println!(
                 "{:?}, distance: {}",
                 self.position,
@@ -138,7 +138,7 @@ impl State {
         let neighbours = self.position.neighbours();
         self.num = 0;
         for n in neighbours {
-            self.num = self.num + *self.cells.get(&n).unwrap_or(&0);
+            self.num += *self.cells.get(&n).unwrap_or(&0);
         }
         // println!(
         //     "Moved {:?}, to {:?} = {}",
@@ -147,7 +147,7 @@ impl State {
         //     self.num
         // );
         self.cells.insert(self.position, self.num);
-        if self.num > 368078 {
+        if self.num > 368_078 {
             Some(self.num)
         } else {
             None

@@ -1,7 +1,7 @@
 pub fn run(_contents: &[Vec<String>]) {
-    const FACTOR_A: u64 = 16807;
-    const FACTOR_B: u64 = 48271;
-    const LIMIT: u64 = 2147483647;
+    const FACTOR_A: u64 = 16_807;
+    const FACTOR_B: u64 = 48_271;
+    const LIMIT: u64 = 2_147_483_647;
 
     let mut count = 0;
     let mut a = 873;

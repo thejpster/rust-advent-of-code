@@ -37,7 +37,7 @@ pub fn run(_contents: &[Vec<String>]) {
 }
 
 fn find_unset(board: &Board) -> Option<Position> {
-    return board.iter().next().cloned();
+    board.iter().next().cloned()
 }
 
 fn fill(board: &mut Board, pos: Position) {

@@ -22,7 +22,7 @@ fn run1(firewall: &HashMap<usize, usize>) {
 }
 
 fn run2(firewall: &HashMap<usize, usize>) {
-    for sleep in 1..99999999 {
+    for sleep in 1.. {
         let mut fail = false;
         for (depth, range) in firewall.iter() {
             let time = sleep + depth;

@@ -16,7 +16,7 @@ pub fn run(contents: &[Vec<String>]) {
                 _ if garbage => garbage_count += 1,
                 '{' => {
                     level += 1;
-                    total = total + level;
+                    total += level;
                 }
                 '}' => {
                     level -= 1;

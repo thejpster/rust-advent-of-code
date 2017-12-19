@@ -32,7 +32,7 @@ pub fn run(contents: &[Vec<String>]) {
     }
 
     let mut root = None;
-    for (name, _) in &nodes {
+    for name in nodes.keys() {
         if !children_set.contains(name) {
             root = Some(name.clone());
         }
@@ -48,7 +48,7 @@ fn weigh_node(name: &str, nodes: &HashMap<String, Node>) -> u32 {
     let node = nodes.get(name).unwrap();
     let mut weight = node.weight;
     for c in &node.children {
-        weight = weight + weigh_node(c, &nodes);
+        weight += weigh_node(c, nodes);
     }
     weight
 }
@@ -57,7 +57,7 @@ fn walk_node(name: &str, nodes: &HashMap<String, Node>) {
     let node = nodes.get(name).unwrap();
     let weights: Vec<u32> = node.children
         .iter()
-        .map(|x| weigh_node(x, &nodes))
+        .map(|x| weigh_node(x, nodes))
         .collect();
     for w in &weights {
         if *w != weights[0] {
@@ -65,7 +65,7 @@ fn walk_node(name: &str, nodes: &HashMap<String, Node>) {
             break;
         }
     }
-    if node.children.len() > 0 {
+    if !node.children.is_empty() {
         println!(
             "{} ({}) -> {:?}",
             name,
@@ -76,6 +76,6 @@ fn walk_node(name: &str, nodes: &HashMap<String, Node>) {
         println!("{} ({})", name, node.weight);
     }
     for c in &node.children {
-        walk_node(c, &nodes);
+        walk_node(c, nodes);
     }
 }

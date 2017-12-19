@@ -1,11 +1,11 @@
 use md5;
 
-const DOOR_ID: &'static str = "wtnhxymk";
-// const DOOR_ID:&'static str = "abc";
+const DOOR_ID: &str = "wtnhxymk";
+// const DOOR_ID:&str = "abc";
 
 pub fn run(_contents: &[Vec<String>]) {
     let mut count = 0;
-    for i in 1..99999999 {
+    for i in 1..99_999_999 {
         // println!("i = {}", i);
         let input = format!("{}{}", DOOR_ID, i);
         // println!("input = {}", input);
@@ -23,7 +23,7 @@ pub fn run(_contents: &[Vec<String>]) {
 
     let mut count = 0;
     let mut output: [Option<u8>; 8] = [None; 8];
-    for i in 1..99999999 {
+    for i in 1..99_999_999 {
         // println!("i = {}", i);
         let input = format!("{}{}", DOOR_ID, i);
         // println!("input = {}", input);

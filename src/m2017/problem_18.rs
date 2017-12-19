@@ -154,14 +154,14 @@ fn run2(contents: &[Vec<String>]) {
     let mut cpu1 = Cpu::new(1);
     let mut old_pcs = [0, 0];
     loop {
-        for idx in 0..2 {
+        for (idx, old_pc) in old_pcs.iter_mut().enumerate() {
             let (cpu, other) = match idx {
                 0 => (&mut cpu0, &mut cpu1),
                 1 => (&mut cpu1, &mut cpu0),
                 _ => panic!(),
             };
             let line = &contents[0][cpu.pc];
-            old_pcs[idx] = cpu.pc;
+            *old_pc = cpu.pc;
             cpu.run2(line, other);
         }
         if old_pcs[0] == cpu0.pc && old_pcs[1] == cpu1.pc {

@@ -57,7 +57,7 @@ pub fn run(contents: &[Vec<String>]) {
 }
 
 fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {
-    let result = if pos1.x == pos2.x {
+    if pos1.x == pos2.x {
         // walking along y
         if pos1.y < pos2.y {
             // walking forwards
@@ -72,34 +72,30 @@ fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {
             v.reverse();
             v
         }
+    } else if pos1.x < pos2.x {
+        // walking forwards
+        (pos1.x..pos2.x)
+            .map(|x| Position { x, y: pos1.y })
+            .collect()
     } else {
-        // walking along x
-        if pos1.x < pos2.x {
-            // walking forwards
-            (pos1.x..pos2.x)
-                .map(|x| Position { x, y: pos1.y })
-                .collect()
-        } else {
-            // walking backwards
-            let mut v = (pos2.x + 1..pos1.x + 1)
-                .map(|x| Position { x, y: pos1.y })
-                .collect::<Vec<_>>();
-            v.reverse();
-            v
-        }
-    };
-    result
+        // walking backwards
+        let mut v = (pos2.x + 1..pos1.x + 1)
+            .map(|x| Position { x, y: pos1.y })
+            .collect::<Vec<_>>();
+        v.reverse();
+        v
+    }
 }
 
 impl Position {
     fn distance(&self) -> i32 {
-        return self.x.abs() + self.y.abs();
+        self.x.abs() + self.y.abs()
     }
 }
 
 impl State {
     fn distance(&self) -> i32 {
-        return self.1.distance();
+        self.1.distance()
     }
 }
 

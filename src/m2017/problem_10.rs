@@ -12,7 +12,7 @@ pub fn run(contents: &[Vec<String>]) {
 fn part1(items: &mut [u8], contents: &str) {
     let lengths: Vec<u8> = contents.split(',').map(|x| x.parse().unwrap()).collect();
     round(items, &lengths, 1);
-    println!("{}", items[0] as u16 * items[1] as u16);
+    println!("{}", u16::from(items[0]) * u16::from(items[1]));
 }
 
 fn part2(items: &mut [u8], contents: &str) {
@@ -49,6 +49,6 @@ fn reverse(items: &mut [u8], mut start: usize, mut length: usize) {
         let end = (start + length - 1) % items.len();
         items.swap(start, end);
         start = (start + 1) % items.len();
-        length = length - 2;
+        length -= 2;
     }
 }

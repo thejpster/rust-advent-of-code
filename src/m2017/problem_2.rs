@@ -8,16 +8,14 @@ pub fn run(contents: &[Vec<String>]) {
             .collect();
         for cell1 in &cells {
             for cell2 in &cells {
-                if cell1 != cell2 {
-                    if *cell1 % *cell2 == 0 {
-                        cs2 = cs2 + (*cell1 / *cell2);
-                    }
+                if (cell1 != cell2)  && (*cell1 % *cell2 == 0) {
+                    cs2 += *cell1 / *cell2;
                 }
             }
         }
         let max = cells.iter().cloned().max().unwrap();
         let min = cells.iter().cloned().min().unwrap();
-        cs = cs + (max - min);
+        cs += max - min;
     }
     println!("CS {}", cs);
     println!("CS2 {}", cs2);
