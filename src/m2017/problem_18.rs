@@ -29,38 +29,38 @@ impl<'a> Cpu<'a> {
     fn get_reg(&self, reg: &'a str) -> i64 {
         match reg.parse() {
             Ok(x) => x,
-            Err(_) => *self.registers.get(reg).unwrap(),
+            Err(_) => self.registers[reg],
         }
     }
 
     fn set(&mut self, reg: &'a str, reg2: &'a str) {
         let x = self.get_reg(reg2);
         self.registers.insert(reg, x);
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 
     fn mul(&mut self, reg: &'a str, reg2: &'a str) {
         let mut x = self.get_reg(reg);
         let y = self.get_reg(reg2);
-        x = x * y;
+        x *= y;
         self.registers.insert(reg, x);
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 
     fn add(&mut self, reg: &'a str, reg2: &'a str) {
         let mut x = self.get_reg(reg);
         let y = self.get_reg(reg2);
-        x = x + y;
+        x += y;
         self.registers.insert(reg, x);
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 
     fn modulo(&mut self, reg: &'a str, reg2: &'a str) {
         let mut x = self.get_reg(reg);
         let y = self.get_reg(reg2);
-        x = x % y;
+        x %= y;
         self.registers.insert(reg, x);
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 
     fn jgz(&mut self, reg: &'a str, reg2: &'a str) {
@@ -72,12 +72,12 @@ impl<'a> Cpu<'a> {
     fn snd1(&mut self, reg: &'a str) {
         let s = self.get_reg(reg);
         self.snd = s;
-        self.pc = self.pc + 1;
+        self.pc += 1;
     }
 
     fn rcv1(&mut self, reg: &'a str) -> bool {
         let s = self.get_reg(reg);
-        self.pc = self.pc + 1;
+        self.pc += 1;
         if s != 0 {
             println!("Rcv: {}", self.snd);
             true
@@ -89,21 +89,21 @@ impl<'a> Cpu<'a> {
     fn snd(&mut self, reg: &'a str, cpu: &mut Cpu) {
         let s = self.get_reg(reg);
         cpu.queue.push_back(s);
-        cpu.count = cpu.count + 1;
-        self.pc = self.pc + 1;
+        cpu.count += 1;
+        self.pc += 1;
     }
 
     fn rcv(&mut self, reg: &'a str) {
-        if self.queue.len() != 0 {
-            self.registers.insert(reg, self.queue.pop_front().unwrap());
-            self.pc = self.pc + 1;
+        if let Some(x) = self.queue.pop_front() {
+            self.registers.insert(reg, x);
+            self.pc += 1;
         }
     }
 
     fn run1(&mut self, line: &'a str) -> bool {
         let parts: Vec<&str> = line.split_whitespace().collect();
         // println!("Running #{}: {:?}", self.pc, parts);
-        match parts[0].as_ref() {
+        match parts[0] {
             "set" => self.set(parts[1], parts[2]),
             "mul" => self.mul(parts[1], parts[2]),
             "jgz" => self.jgz(parts[1], parts[2]),
@@ -121,7 +121,7 @@ impl<'a> Cpu<'a> {
     fn run2(&mut self, line: &'a str, other: &mut Cpu) {
         let parts: Vec<&str> = line.split_whitespace().collect();
         // println!("Running #{}: {:?}", self.pc, parts);
-        match parts[0].as_ref() {
+        match parts[0] {
             "set" => self.set(parts[1], parts[2]),
             "mul" => self.mul(parts[1], parts[2]),
             "jgz" => self.jgz(parts[1], parts[2]),

@@ -14,7 +14,7 @@ pub fn run(_contents: &[Vec<String>]) {
         let digit = hash[2] & 0x0F;
         if (hash[0] == 0) && (hash[1] == 0) && (hash[2] & 0xF0 == 0) {
             println!("{:x}", digit);
-            count = count + 1;
+            count += 1;
             if count == 8 {
                 break;
             }
@@ -36,7 +36,7 @@ pub fn run(_contents: &[Vec<String>]) {
             match output[pos] {
                 None => {
                     output[pos] = Some(digit);
-                    count = count + 1;
+                    count += 1;
                 }
                 Some(_) => {}
             }

@@ -21,7 +21,7 @@ pub fn run(contents: &[Vec<String>]) {
         while item > 0 {
             inner_idx = (inner_idx + 1) % num_items;
             buckets[inner_idx] = buckets[inner_idx] + 1;
-            item = item - 1;
+            item -= 1;
         }
         if let Some(x) = hs.get(&buckets) {
             println!("Cycles: {} .. {} ({})", i, x, i - x);

@@ -37,7 +37,7 @@ pub fn run(contents: &[Vec<String>]) {
     let mut visit = vec![];
     for turn in turns {
         // println!("Turn: {:?}", turn);
-        let old_state = state.clone();
+        let old_state = state;
         state = state + turn;
         visit.extend(steps(&old_state.1, &state.1));
     }
@@ -128,14 +128,13 @@ impl ::std::ops::Add<Turn> for State {
     fn add(mut self, rhs: Turn) -> Self::Output {
         self.0 = self.0 + rhs;
         let distance = match rhs {
-            Turn::Left(x) => x,
-            Turn::Right(x) => x,
+            Turn::Left(x) | Turn::Right(x) => x,
         };
         match self.0 {
-            Dir::Up => self.1.x = self.1.x + distance,
-            Dir::Down => self.1.x = self.1.x - distance,
-            Dir::Left => self.1.y = self.1.y - distance,
-            Dir::Right => self.1.y = self.1.y + distance,
+            Dir::Up => self.1.x += distance,
+            Dir::Down => self.1.x -= distance,
+            Dir::Left => self.1.y -= distance,
+            Dir::Right => self.1.y += distance,
         }
         self
     }

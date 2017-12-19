@@ -30,7 +30,7 @@ pub fn run(_contents: &[Vec<String>]) {
 
     let mut regions = 0;
     while let Some(p) = find_unset(&board) {
-        regions = regions + 1;
+        regions += 1;
         fill(&mut board, p);
     }
     println!("Regions: {}", regions);
@@ -42,7 +42,7 @@ fn find_unset(board: &Board) -> Option<Position> {
 
 fn fill(board: &mut Board, pos: Position) {
     if board.remove(&pos) {
-        for shift in [(-1, 0), (1, 0), (0, -1), (0, 1)].iter() {
+        for shift in &[(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let tpos = (shift.0 + pos.0, shift.1 + pos.1);
             fill(board, tpos);
         }

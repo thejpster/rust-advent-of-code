@@ -4,7 +4,7 @@ pub fn run(contents: &[Vec<String>]) {
     let mut count = 0;
     for room in &contents[0] {
         // println!("Line: {}", room);
-        count = count + check_csum(&room);
+        count += check_csum(room);
     }
     println!("Count: {}", count);
 }
@@ -17,7 +17,7 @@ fn shift_string(s: &str, shift: u32) -> String {
                     32
                 } else {
                     let idx = c - 97;
-                    let new_idx = (idx as u32 + shift) % 26;
+                    let new_idx = (u32::from(idx) + shift) % 26;
                     (new_idx + 97) as u8
                 }
             })

@@ -13,13 +13,13 @@ pub fn run(contents: &[Vec<String>]) {
             match ch {
                 '!' if garbage => skip = true,
                 '>' if garbage => garbage = false,
-                _ if garbage => garbage_count = garbage_count + 1,
+                _ if garbage => garbage_count += 1,
                 '{' => {
-                    level = level + 1;
+                    level += 1;
                     total = total + level;
                 }
                 '}' => {
-                    level = level - 1;
+                    level -= 1;
                 }
                 '<' => garbage = true,
                 '!' => panic!("Can't skip outside garbage!"),

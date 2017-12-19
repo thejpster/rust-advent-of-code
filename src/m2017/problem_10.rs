@@ -39,7 +39,7 @@ fn round(items: &mut [u8], lengths: &[u8], count: usize) {
             let length = *x as usize;
             reverse(items, start, length);
             start = (start + length + skip) % items.len();
-            skip = skip + 1;
+            skip += 1;
         }
     }
 }

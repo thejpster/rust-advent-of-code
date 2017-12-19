@@ -6,7 +6,7 @@ pub fn run(contents: &[Vec<String>]) {
         let old_idx = idx as usize;
         idx = idx + jumps[old_idx];
         jumps[old_idx] = jumps[old_idx] + 1;
-        steps = steps + 1;
+        steps += 1;
     }
     println!("steps: {}", steps);
 
@@ -21,7 +21,7 @@ pub fn run(contents: &[Vec<String>]) {
         } else {
             jumps[old_idx] = jumps[old_idx] + 1;
         }
-        steps = steps + 1;
+        steps += 1;
     }
     println!("steps: {}", steps);
 }

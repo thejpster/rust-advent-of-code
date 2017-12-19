@@ -10,7 +10,7 @@ pub fn run(contents: &[Vec<String>]) {
             hm.insert(word.into());
         }
         if !dup {
-            count = count + 1;
+            count += 1;
         }
     }
     println!("Count: {}", count);
@@ -26,7 +26,7 @@ pub fn run(contents: &[Vec<String>]) {
             hm.insert(word);
         }
         if !dup {
-            count = count + 1;
+            count += 1;
         }
     }
     println!("Count: {}", count);

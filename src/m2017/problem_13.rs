@@ -15,7 +15,7 @@ fn run1(firewall: &HashMap<usize, usize>) {
     let mut score = 0;
     for (depth, range) in firewall.iter() {
         if trip_scanner(*depth, *range) {
-            score = score + (depth * range);
+            score += depth * range;
         }
     }
     println!("Part 1: {}", score);
@@ -31,7 +31,7 @@ fn run2(firewall: &HashMap<usize, usize>) {
                 break;
             }
         }
-        if fail == false {
+        if !fail {
             println!("Part 2: {}", sleep);
             break;
         }

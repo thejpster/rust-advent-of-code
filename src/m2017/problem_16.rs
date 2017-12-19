@@ -27,7 +27,7 @@ impl Buffer {
     fn rotate(&mut self, offset: usize) {
         // abcde offset 3 => cdeab
         let len = self.len;
-        for (_, i) in self.index.iter_mut() {
+        for i in self.index.values_mut() {
             *i = (*i + offset) % len;
         }
     }
@@ -35,7 +35,7 @@ impl Buffer {
     fn swap_by_index(&mut self, a: usize, b: usize) {
         let mut k_a = None;
         let mut k_b = None;
-        for (k, v) in self.index.iter() {
+        for (k, v) in &self.index {
             if *v == a {
                 k_a = Some(*k);
             }
@@ -47,8 +47,8 @@ impl Buffer {
     }
 
     fn swap_by_char(&mut self, a: char, b: char) {
-        let i1 = *self.index.get(&a).unwrap();
-        let i2 = *self.index.get(&b).unwrap();
+        let i1 = self.index[&a];
+        let i2 = self.index[&b];
         self.index.insert(a, i2);
         self.index.insert(b, i1);
     }
@@ -79,11 +79,11 @@ pub fn run(contents: &[Vec<String>]) {
             break;
         }
         seen.push(s);
-        for step in steps.iter() {
-            match step {
-                &Move::Exchange(a, b) => buffer.swap_by_index(a, b),
-                &Move::Spin(s) => buffer.rotate(s),
-                &Move::Partner(a, b) => buffer.swap_by_char(a, b),
+        for step in &steps {
+            match *step {
+                Move::Exchange(a, b) => buffer.swap_by_index(a, b),
+                Move::Spin(s) => buffer.rotate(s),
+                Move::Partner(a, b) => buffer.swap_by_char(a, b),
             }
         }
     }

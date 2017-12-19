@@ -5,7 +5,7 @@ pub fn run(contents: &[Vec<String>]) {
             .map(|x| x.parse().unwrap())
             .collect();
         if possible(parts) {
-            count = count + 1;
+            count += 1;
         }
     }
     println!("Count: {}", count);
@@ -20,13 +20,13 @@ pub fn run(contents: &[Vec<String>]) {
         let tri2 = vec![parts[0][1], parts[1][1], parts[2][1]];
         let tri3 = vec![parts[0][2], parts[1][2], parts[2][2]];
         if possible(tri1) {
-            count = count + 1;
+            count += 1;
         }
         if possible(tri2) {
-            count = count + 1;
+            count += 1;
         }
         if possible(tri3) {
-            count = count + 1;
+            count += 1;
         }
     }
 

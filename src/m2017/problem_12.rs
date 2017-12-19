@@ -29,7 +29,7 @@ pub fn run(contents: &[Vec<String>]) {
         let mut seen = HashSet::new();
         let search = *hm.keys().next().unwrap();
         count(&hm, &mut seen, search);
-        groups = groups + 1;
+        groups += 1;
         for x in seen {
             hm.remove(&x);
         }

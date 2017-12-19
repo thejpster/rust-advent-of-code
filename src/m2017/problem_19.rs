@@ -96,7 +96,7 @@ pub fn run(contents: &[Vec<String>]) {
         // println!("At {:?} = {}", location, map[location.row][location.col]);
         if let Some(d) = calc_new_dir(&map, &location, dir) {
             dir = d;
-            steps = steps + 1;
+            steps += 1;
             location = location + dir;
         } else {
             break;
@@ -107,7 +107,7 @@ pub fn run(contents: &[Vec<String>]) {
 }
 
 /// Which way next?
-fn calc_new_dir(map: &Vec<Vec<Piece>>, location: &Location, dir: Direction) -> Option<Direction> {
+fn calc_new_dir(map: &[Vec<Piece>], location: &Location, dir: Direction) -> Option<Direction> {
     match map[location.row][location.col] {
         Piece::Space => None,
         Piece::Cross => {

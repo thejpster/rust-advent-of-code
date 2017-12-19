@@ -5,7 +5,7 @@ pub fn run(contents: &[Vec<String>]) {
     for i in 1u32..2018u32 {
         position = (position + input) % spinlocks.len();
         spinlocks.insert(position + 1, i);
-        position = position + 1;
+        position += 1;
     }
     println!("Part1: {}", spinlocks[position + 1]);
 
@@ -17,8 +17,8 @@ pub fn run(contents: &[Vec<String>]) {
         if position == 0 {
             next = i;
         }
-        position = position + 1;
-        spinlocks_len = spinlocks_len + 1;
+        position += 1;
+        spinlocks_len += 1;
     }
     println!("Next: {}", next);
 }

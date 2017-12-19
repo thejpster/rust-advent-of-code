@@ -10,7 +10,7 @@ pub fn run(_contents: &[Vec<String>]) {
         a = (a * FACTOR_A) % LIMIT;
         b = (b * FACTOR_B) % LIMIT;
         if (a & 0xFFFF) == (b & 0xFFFF) {
-            count = count + 1;
+            count += 1;
         }
     }
     println!("Count: {}", count);
@@ -28,7 +28,7 @@ pub fn run(_contents: &[Vec<String>]) {
             (b % 8) != 0
         } {}
         if (a & 0xFFFF) == (b & 0xFFFF) {
-            count = count + 1;
+            count += 1;
         }
     }
     println!("Count: {}", count);
