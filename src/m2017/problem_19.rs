@@ -21,27 +21,13 @@ struct Location {
     col: usize,
 }
 
-impl ::std::ops::Add<Direction> for Location {
-    type Output = Location;
-
-    fn add(self, rhs: Direction) -> Location {
+impl ::std::ops::AddAssign<Direction> for Location {
+    fn add_assign(&mut self, rhs: Direction) {
         match rhs {
-            Direction::Up => Location {
-                row: self.row - 1,
-                col: self.col,
-            },
-            Direction::Down => Location {
-                row: self.row + 1,
-                col: self.col,
-            },
-            Direction::Left => Location {
-                row: self.row,
-                col: self.col - 1,
-            },
-            Direction::Right => Location {
-                row: self.row,
-                col: self.col + 1,
-            },
+            Direction::Up => self.row -= 1,
+            Direction::Down => self.row += 1,
+            Direction::Left => self.col -= 1,
+            Direction::Right => self.col += 1,
         }
     }
 }
@@ -97,7 +83,7 @@ pub fn run(contents: &[Vec<String>]) {
         if let Some(d) = calc_new_dir(&map, &location, dir) {
             dir = d;
             steps += 1;
-            location = location + dir;
+            location += dir;
         } else {
             break;
         }

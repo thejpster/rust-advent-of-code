@@ -12,19 +12,22 @@ enum Turn {
     Right(i32),
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 struct Position {
     x: i32,
     y: i32,
 }
 
 #[derive(Debug, Clone, Copy)]
-struct State(Dir, Position);
+struct State {
+    dir: Dir,
+    pos: Position
+}
 
 pub fn run(contents: &[Vec<String>]) {
     // Big one line string
     let first_line = &contents[0][0];
-    let mut state = State(Dir::Up, Position { x: 0, y: 0 });
+    let mut state = State { dir: Dir::Up, pos: Position::default() };
     let turns = first_line.split_whitespace().map(|x| {
         // println!("Got {}", x);
         let val = &x[1..].replace(",", "");
@@ -38,8 +41,8 @@ pub fn run(contents: &[Vec<String>]) {
     for turn in turns {
         // println!("Turn: {:?}", turn);
         let old_state = state;
-        state = state + turn;
-        visit.extend(steps(&old_state.1, &state.1));
+        state += turn;
+        visit.extend(steps(&old_state.pos, &state.pos));
     }
     println!("At {:?}", state);
     println!("Distance: {}", state.distance());
@@ -95,7 +98,7 @@ impl Position {
 
 impl State {
     fn distance(&self) -> i32 {
-        self.1.distance()
+        self.pos.distance()
     }
 }
 
@@ -119,19 +122,17 @@ impl ::std::ops::Add<Turn> for Dir {
     }
 }
 
-impl ::std::ops::Add<Turn> for State {
-    type Output = Self;
-    fn add(mut self, rhs: Turn) -> Self::Output {
-        self.0 = self.0 + rhs;
+impl ::std::ops::AddAssign<Turn> for State {
+    fn add_assign(&mut self, rhs: Turn) {
+        self.dir = self.dir + rhs;
         let distance = match rhs {
             Turn::Left(x) | Turn::Right(x) => x,
         };
-        match self.0 {
-            Dir::Up => self.1.x += distance,
-            Dir::Down => self.1.x -= distance,
-            Dir::Left => self.1.y -= distance,
-            Dir::Right => self.1.y += distance,
+        match self.dir {
+            Dir::Up => self.pos.x += distance,
+            Dir::Down => self.pos.x -= distance,
+            Dir::Left => self.pos.y -= distance,
+            Dir::Right => self.pos.y += distance,
         }
-        self
     }
 }
