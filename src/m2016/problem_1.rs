@@ -21,13 +21,16 @@ struct Position {
 #[derive(Debug, Clone, Copy)]
 struct State {
     dir: Dir,
-    pos: Position
+    pos: Position,
 }
 
 pub fn run(contents: &[Vec<String>]) {
     // Big one line string
     let first_line = &contents[0][0];
-    let mut state = State { dir: Dir::Up, pos: Position::default() };
+    let mut state = State {
+        dir: Dir::Up,
+        pos: Position::default(),
+    };
     let turns = first_line.split_whitespace().map(|x| {
         // println!("Got {}", x);
         let val = &x[1..].replace(",", "");

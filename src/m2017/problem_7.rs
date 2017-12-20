@@ -55,10 +55,7 @@ fn weigh_node(name: &str, nodes: &HashMap<String, Node>) -> u32 {
 
 fn walk_node(name: &str, nodes: &HashMap<String, Node>) {
     let node = nodes.get(name).unwrap();
-    let weights: Vec<u32> = node.children
-        .iter()
-        .map(|x| weigh_node(x, nodes))
-        .collect();
+    let weights: Vec<u32> = node.children.iter().map(|x| weigh_node(x, nodes)).collect();
     for w in &weights {
         if *w != weights[0] {
             println!("Mismatch {} != {}", w, weights[0]);

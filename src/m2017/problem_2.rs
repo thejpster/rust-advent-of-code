@@ -8,7 +8,7 @@ pub fn run(contents: &[Vec<String>]) {
             .collect();
         for cell1 in &cells {
             for cell2 in &cells {
-                if (cell1 != cell2)  && (*cell1 % *cell2 == 0) {
+                if (cell1 != cell2) && (*cell1 % *cell2 == 0) {
                     cs2 += *cell1 / *cell2;
                 }
             }
