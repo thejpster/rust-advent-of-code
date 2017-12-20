@@ -6,9 +6,9 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
         .chars()
         .map(|x| {
             // println!("Got {}", x);
-            x.to_digit(10).unwrap()
+            x.to_digit(10).ok_or_else(|| format_err!("Bad digit {}", x))
         })
-        .collect();
+        .collect::<Result<_, _>>()?;
     // for number in &numbers {
     //     println!("Number: {}", number);
     // }

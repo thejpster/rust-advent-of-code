@@ -5,13 +5,13 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for room in &contents[0] {
         // println!("Line: {}", room);
-        count += check_csum(room);
+        count += check_csum(room)?;
     }
     println!("Count: {}", count);
     Ok(())
 }
 
-fn shift_string(s: &str, shift: u32) -> String {
+fn shift_string(s: &str, shift: u32) -> Result<String, Error> {
     String::from_utf8(
         s.bytes()
             .map(|c| {
@@ -24,10 +24,10 @@ fn shift_string(s: &str, shift: u32) -> String {
                 }
             })
             .collect(),
-    ).unwrap()
+    ).map_err(|_| format_err!("Failed to make string"))
 }
 
-fn check_csum(word: &str) -> u32 {
+fn check_csum(word: &str) -> Result<u32, Error> {
     let parts: Vec<&str> = word.split('-').collect();
     let tail: Vec<&str> = parts[parts.len() - 1].split('[').collect();
     let room = parts[0..parts.len() - 1].join("");
@@ -55,10 +55,10 @@ fn check_csum(word: &str) -> u32 {
         // println!("Pairs: {:?}", pairs);
         // println!("Key: {}", key);
         println!("Tail: {:?}", tail);
-        let shift = tail[0].parse::<u32>().unwrap();
-        println!("Shifted: {}", shift_string(&roomdash, shift));
-        shift
+        let shift: u32 = tail[0].parse()?;
+        println!("Shifted: {}", shift_string(&roomdash, shift)?);
+        Ok(shift)
     } else {
-        0
+        Ok(0)
     }
 }
