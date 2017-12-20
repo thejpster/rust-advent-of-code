@@ -12,12 +12,14 @@ impl Add<Pos> for Pos {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     play("ne,ne,ne");
     play("ne,ne,sw,sw");
     play("ne,ne,s,s");
     play("se,sw,se,sw,sw");
     play(&contents[0][0]);
+    Ok(())
 }
 
 fn play(steps_joined: &str) {

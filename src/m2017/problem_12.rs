@@ -2,7 +2,8 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::collections::hash_map::Entry;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut hm: HashMap<u32, Vec<u32>> = HashMap::new();
     for line in &contents[0] {
         let mut parts = line.split(" <-> ");
@@ -35,6 +36,8 @@ pub fn run(contents: &[Vec<String>]) {
         }
     }
     println!("Groups: {}", groups);
+
+    Ok(())
 }
 
 fn count(hm: &HashMap<u32, Vec<u32>>, seen: &mut HashSet<u32>, index: u32) -> u32 {

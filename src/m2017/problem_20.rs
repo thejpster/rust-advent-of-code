@@ -82,7 +82,7 @@ impl Vec3 {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let particles_orig: Result<Vec<Particle>, Error> = contents[0]
         .iter()
         .enumerate()
@@ -130,4 +130,5 @@ pub fn run(contents: &[Vec<String>]) {
             last_count = particles2.len();
         }
     }
+    Ok(())
 }

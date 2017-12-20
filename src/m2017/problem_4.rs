@@ -1,13 +1,15 @@
 use std::collections::HashSet;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for line in &contents[0] {
         let mut dup = false;
         let mut set: HashSet<String> = HashSet::new();
         for word in line.split_whitespace() {
-            dup |= set.contains(word);
-            set.insert(word.into());
+            if !set.insert(word.into()) {
+                dup = true;
+            }
         }
         if !dup {
             count += 1;
@@ -31,4 +33,5 @@ pub fn run(contents: &[Vec<String>]) {
         }
     }
     println!("Count: {}", count);
+    Ok(())
 }

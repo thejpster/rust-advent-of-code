@@ -1,4 +1,6 @@
-pub fn run(_contents: &[Vec<String>]) {
+use failure::Error;
+
+pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
     const FACTOR_A: u64 = 16_807;
     const FACTOR_B: u64 = 48_271;
     const LIMIT: u64 = 2_147_483_647;
@@ -32,4 +34,5 @@ pub fn run(_contents: &[Vec<String>]) {
         }
     }
     println!("Count: {}", count);
+    Ok(())
 }

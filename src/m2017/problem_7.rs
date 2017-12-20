@@ -6,7 +6,8 @@ struct Node {
     children: Vec<String>,
 }
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut children_set: HashSet<String> = HashSet::new();
     let mut nodes: HashMap<String, Node> = HashMap::new();
     for line in &contents[0] {
@@ -42,6 +43,7 @@ pub fn run(contents: &[Vec<String>]) {
     println!("Root: {}", root);
 
     walk_node(&root, &nodes);
+    Ok(())
 }
 
 fn weigh_node(name: &str, nodes: &HashMap<String, Node>) -> u32 {

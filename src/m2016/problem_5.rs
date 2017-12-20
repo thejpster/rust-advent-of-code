@@ -1,9 +1,10 @@
+use failure::Error;
 use md5;
 
 const DOOR_ID: &str = "wtnhxymk";
 // const DOOR_ID:&str = "abc";
 
-pub fn run(_contents: &[Vec<String>]) {
+pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for i in 1..99_999_999 {
         // println!("i = {}", i);
@@ -52,4 +53,5 @@ pub fn run(_contents: &[Vec<String>]) {
             .map(|d| format!("{:x}", d.unwrap()))
             .collect::<String>()
     );
+    Ok(())
 }

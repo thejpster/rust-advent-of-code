@@ -44,7 +44,8 @@ impl ::std::fmt::Display for Piece {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut map: Vec<Vec<Piece>> = Vec::new();
     for line in &contents[0] {
         let mut line_vec = Vec::new();
@@ -90,6 +91,7 @@ pub fn run(contents: &[Vec<String>]) {
     }
     println!("Letters: {}", letters);
     println!("Steps: {}", steps);
+    Ok(())
 }
 
 /// Which way next?

@@ -133,7 +133,8 @@ impl ::std::ops::Add<char> for Pins2 {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut digit = Pins::Five;
     for line in &contents[0] {
         for step in line.chars() {
@@ -153,4 +154,5 @@ pub fn run(contents: &[Vec<String>]) {
         }
         println!("{:?}", digit);
     }
+    Ok(())
 }

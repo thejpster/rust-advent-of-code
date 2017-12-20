@@ -1,24 +1,28 @@
 const MAX: u8 = 255;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut items: Vec<u8> = (0..MAX).collect();
     // Don't have inclusive range syntax, so manually push on the last item
     items.push(MAX);
 
-    part1(&mut items.clone(), &contents[0][0]);
-    part2(&mut items, &contents[0][0]);
+    part1(&mut items.clone(), &contents[0][0])?;
+    part2(&mut items, &contents[0][0])?;
+    Ok(())
 }
 
-fn part1(items: &mut [u8], contents: &str) {
-    let lengths: Vec<u8> = contents.split(',').map(|x| x.parse().unwrap()).collect();
+fn part1(items: &mut [u8], contents: &str) -> Result<(), Error> {
+    let lengths: Vec<u8> = contents.split(',').map(|x| x.parse()).collect::<Result<_, _>>()?;
     round(items, &lengths, 1);
     println!("{}", u16::from(items[0]) * u16::from(items[1]));
+    Ok(())
 }
 
-fn part2(items: &mut [u8], contents: &str) {
+fn part2(items: &mut [u8], contents: &str) -> Result<(), Error> {
     let hash = calculate(items, contents);
     let dense_hash: String = hash.iter().map(|x| format!("{:02x}", x)).collect();
     println!("Dense Hash: {}", dense_hash);
+    Ok(())
 }
 
 pub fn calculate(items: &mut [u8], contents: &str) -> Vec<u8> {

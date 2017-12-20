@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut jumps: Vec<i64> = contents[0].iter().map(|x| x.parse().unwrap()).collect();
     let mut idx: i64 = 0;
     let mut steps = 0;
@@ -24,4 +25,5 @@ pub fn run(contents: &[Vec<String>]) {
         steps += 1;
     }
     println!("steps: {}", steps);
+    Ok(())
 }

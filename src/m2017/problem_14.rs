@@ -1,12 +1,13 @@
 use std::collections::HashSet;
 use super::problem_10::calculate;
+use failure::Error;
 
 const MAX: u8 = 255;
 
 type Position = (i32, i32);
 type Board = HashSet<Position>;
 
-pub fn run(_contents: &[Vec<String>]) {
+pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
     let mut items: Vec<u8> = (0..MAX).collect();
     // Don't have inclusive range syntax, so manually push on the last item
     items.push(MAX);
@@ -34,6 +35,7 @@ pub fn run(_contents: &[Vec<String>]) {
         fill(&mut board, p);
     }
     println!("Regions: {}", regions);
+    Ok(())
 }
 
 fn find_unset(board: &Board) -> Option<Position> {

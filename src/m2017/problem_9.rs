@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     for line in &contents[0] {
         let mut skip = false;
         let mut garbage = false;
@@ -29,4 +30,5 @@ pub fn run(contents: &[Vec<String>]) {
         }
         println!("Total: {}, Garbage Count: {}", total, garbage_count);
     }
+    Ok(())
 }

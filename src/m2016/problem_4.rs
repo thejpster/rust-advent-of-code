@@ -1,12 +1,14 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for room in &contents[0] {
         // println!("Line: {}", room);
         count += check_csum(room);
     }
     println!("Count: {}", count);
+    Ok(())
 }
 
 fn shift_string(s: &str, shift: u32) -> String {

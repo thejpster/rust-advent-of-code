@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let spreadsheet = &contents[0];
     let mut cs = 0;
     let mut cs2 = 0;
@@ -19,4 +20,5 @@ pub fn run(contents: &[Vec<String>]) {
     }
     println!("CS {}", cs);
     println!("CS2 {}", cs2);
+    Ok(())
 }

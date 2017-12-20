@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for line in &contents[0] {
         let parts: Vec<u32> = line.split_whitespace()
@@ -31,6 +32,7 @@ pub fn run(contents: &[Vec<String>]) {
     }
 
     println!("Count: {}", count);
+    Ok(())
 }
 
 fn possible(mut v: Vec<u32>) -> bool {

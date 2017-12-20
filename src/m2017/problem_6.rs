@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut hs = HashMap::new();
     let mut buckets: Vec<u32> = contents[0][0]
         .split_whitespace()
@@ -29,4 +30,5 @@ pub fn run(contents: &[Vec<String>]) {
         }
         hs.insert(buckets.clone(), i);
     }
+    Ok(())
 }

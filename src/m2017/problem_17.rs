@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let input: usize = contents[0][0].parse().unwrap();
     let mut spinlocks: Vec<u32> = vec![0];
     let mut position = 0usize;
@@ -21,4 +22,5 @@ pub fn run(contents: &[Vec<String>]) {
         spinlocks_len += 1;
     }
     println!("Next: {}", next);
+    Ok(())
 }

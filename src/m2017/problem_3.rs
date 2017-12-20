@@ -25,6 +25,7 @@
 //! Total steps = 4(N-1).
 
 use std::collections::HashMap;
+use failure::Error;
 
 #[derive(Eq, PartialEq, Hash, Copy, Clone)]
 struct Position {
@@ -155,12 +156,13 @@ impl State {
     }
 }
 
-pub fn run(_contents: &[Vec<String>]) {
-    problem_a();
-    problem_b();
+pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
+    problem_a()?;
+    problem_b()?;
+    Ok(())
 }
 
-pub fn problem_a() {
+pub fn problem_a() -> Result<(), Error> {
     let mut state = State::new();
     for i in 1..304 {
         let edge_len = (i * 2) + 1;
@@ -170,9 +172,10 @@ pub fn problem_a() {
             state.go(step);
         }
     }
+    Ok(())
 }
 
-pub fn problem_b() {
+pub fn problem_b() -> Result<(), Error> {
     let mut state = State::new();
     for i in 1..304 {
         let edge_len = (i * 2) + 1;
@@ -181,8 +184,9 @@ pub fn problem_b() {
         for step in path {
             if let Some(x) = state.go2(step) {
                 println!("{}", x);
-                return;
+                return Ok(());
             }
         }
     }
+    Err(format_err!("Shouldn't get here..."))
 }

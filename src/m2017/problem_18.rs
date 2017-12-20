@@ -134,12 +134,14 @@ impl<'a> Cpu<'a> {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
-    run1(contents);
-    run2(contents);
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
+    run1(contents)?;
+    run2(contents)?;
+    Ok(())
 }
 
-fn run1(contents: &[Vec<String>]) {
+fn run1(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut cpu = Cpu::new(0);
     loop {
         let line = &contents[0][cpu.pc];
@@ -147,9 +149,10 @@ fn run1(contents: &[Vec<String>]) {
             break;
         }
     }
+    Ok(())
 }
 
-fn run2(contents: &[Vec<String>]) {
+fn run2(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut cpu0 = Cpu::new(0);
     let mut cpu1 = Cpu::new(1);
     let mut old_pcs = [0, 0];
@@ -169,4 +172,5 @@ fn run2(contents: &[Vec<String>]) {
         }
     }
     println!("Part2 {}", cpu0.count);
+    Ok(())
 }

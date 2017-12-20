@@ -68,24 +68,21 @@ enum AppError {
 /// Parses the arguments, reads the input files and executes the specified
 /// problem.
 fn main() {
-    let (year, problem, filenames) = match parse_args() {
-        Ok(v) => v,
+    match run() {
+        Ok(_) => {},
         Err(e) => {
-            eprintln!("Error parsing arguments: {}", e);
-            std::process::exit(1)
+            eprintln!("Error: {}", e);
+            std::process::exit(1);
         }
-    };
-    let files: Vec<Vec<String>> = match filenames
+    }
+}
+
+fn run() -> Result<(), Error> {
+    let (year, problem, filenames) = parse_args()?;
+    let files: Vec<Vec<String>> = filenames
         .iter()
         .map(|name| open(name))
-        .collect::<Result<Vec<_>, _>>()
-    {
-        Ok(v) => v,
-        Err(e) => {
-            eprintln!("Error opening file: {}", e);
-            std::process::exit(1)
-        }
-    };
+        .collect::<Result<_, _>>()?;
     match year {
         2016 => match problem {
             1 => m2016::problem_1::run(&files),

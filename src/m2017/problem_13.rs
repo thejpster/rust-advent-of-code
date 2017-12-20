@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut firewall: HashMap<usize, usize> = HashMap::new();
     for layer in &contents[0] {
         let parts: Vec<usize> = layer.split(": ").map(|x| x.parse().unwrap()).collect();
@@ -9,6 +10,7 @@ pub fn run(contents: &[Vec<String>]) {
 
     run1(&firewall);
     run2(&firewall);
+    Ok(())
 }
 
 fn run1(firewall: &HashMap<usize, usize>) {

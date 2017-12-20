@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use failure::Error;
 
 enum Move {
     Spin(usize),
@@ -60,9 +61,9 @@ impl Buffer {
     }
 }
 
-pub fn run(contents: &[Vec<String>]) {
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let steps = contents[0][0].split(',');
-    let steps: Vec<Move> = steps.map(|x| decode(x)).collect();
+    let steps: Vec<Move> = steps.map(|x| decode(x)).collect::<Result<_, _>>()?;
     let mut buffer = Buffer::new(16);
     let mut seen: Vec<String> = Vec::new();
     println!("Programs: {:?}", buffer);
@@ -88,19 +89,20 @@ pub fn run(contents: &[Vec<String>]) {
         }
     }
     println!("Part1: {}", seen[1]);
+    Ok(())
 }
 
-fn decode(input: &str) -> Move {
+fn decode(input: &str) -> Result<Move, Error> {
     match &input[0..1] {
-        "s" => Move::Spin(input[1..].parse().unwrap()),
+        "s" => Ok(Move::Spin(input[1..].parse().unwrap())),
         "x" => {
             let mut parts = input[1..].split('/').map(|x| x.parse::<usize>().unwrap());
-            Move::Exchange(parts.next().unwrap(), parts.next().unwrap())
+            Ok(Move::Exchange(parts.next().unwrap(), parts.next().unwrap()))
         }
         "p" => {
             let mut parts = input[1..].split('/').map(|x| x.chars().nth(0).unwrap());
-            Move::Partner(parts.next().unwrap(), parts.next().unwrap())
+            Ok(Move::Partner(parts.next().unwrap(), parts.next().unwrap()))
         }
-        _ => panic!("Bad command"),
+        e => Err(format_err!("Bad input {}", e)),
     }
 }

@@ -24,7 +24,8 @@ struct State {
     pos: Position,
 }
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     // Big one line string
     let first_line = &contents[0][0];
     let mut state = State {
@@ -56,10 +57,11 @@ pub fn run(contents: &[Vec<String>]) {
                 println!("I ({}) {:?}", i, visit[i]);
                 println!("J ({}) {:?}", j, visit[j]);
                 println!("Distance: {}", visit[i].distance());
-                return;
+                return Ok(());
             }
         }
     }
+    Err(format_err!("Shouldn't get here..."))
 }
 
 fn steps(pos1: &Position, pos2: &Position) -> Vec<Position> {

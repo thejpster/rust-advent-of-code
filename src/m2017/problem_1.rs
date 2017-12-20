@@ -1,4 +1,5 @@
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     // Big one line string
     let number_line = &contents[0][0];
     let numbers: Vec<u32> = number_line
@@ -13,6 +14,7 @@ pub fn run(contents: &[Vec<String>]) {
     // }
     calc(&numbers, 1);
     calc(&numbers, numbers.len() / 2);
+    Ok(())
 }
 
 fn calc(numbers: &[u32], offset: usize) {

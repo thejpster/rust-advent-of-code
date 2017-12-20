@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
-pub fn run(contents: &[Vec<String>]) {
+use failure::Error;
+pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut registers = HashMap::new();
     let mut highest = ("x", 0);
     for line in &contents[0] {
@@ -40,4 +41,5 @@ pub fn run(contents: &[Vec<String>]) {
     let max = registers.iter().max_by_key(|x| x.1).unwrap();
     println!("Max: {:?}", max);
     println!("Highest: {:?}", highest);
+    Ok(())
 }
