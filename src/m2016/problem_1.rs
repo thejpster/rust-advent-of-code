@@ -32,17 +32,20 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
         dir: Dir::Up,
         pos: Position::default(),
     };
-    let turns: Vec<Turn> = first_line.split_whitespace().map(|x| {
-        // println!("Got {}", x);
-        match x[1..].replace(",", "").parse() {
-            Ok(val) => match &x[0..1] {
-                "R" => Ok(Turn::Right(val)),
-                "L" => Ok(Turn::Left(val)),
-                _ => Err(format_err!("Bad move {}", x)),
-            },
-            Err(e) => Err(e.into()),
-        }
-    }).collect::<Result<_, _>>()?;
+    let turns: Vec<Turn> = first_line
+        .split_whitespace()
+        .map(|x| {
+            // println!("Got {}", x);
+            match x[1..].replace(",", "").parse() {
+                Ok(val) => match &x[0..1] {
+                    "R" => Ok(Turn::Right(val)),
+                    "L" => Ok(Turn::Left(val)),
+                    _ => Err(format_err!("Bad move {}", x)),
+                },
+                Err(e) => Err(e.into()),
+            }
+        })
+        .collect::<Result<_, _>>()?;
     let mut visit = vec![];
     for turn in turns {
         // println!("Turn: {:?}", turn);

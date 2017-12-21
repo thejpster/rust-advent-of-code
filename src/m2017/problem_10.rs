@@ -12,7 +12,10 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
 }
 
 fn part1(items: &mut [u8], contents: &str) -> Result<(), Error> {
-    let lengths: Vec<u8> = contents.split(',').map(|x| x.parse()).collect::<Result<_, _>>()?;
+    let lengths: Vec<u8> = contents
+        .split(',')
+        .map(|x| x.parse())
+        .collect::<Result<_, _>>()?;
     round(items, &lengths, 1);
     println!("{}", u16::from(items[0]) * u16::from(items[1]));
     Ok(())

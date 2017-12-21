@@ -61,9 +61,9 @@ impl Image {
 }
 
 impl FourSquare {
-	fn new(_pixels: &[bool]) -> FourSquare {
-		unimplemented!();
-	}
+    fn new(_pixels: &[bool]) -> FourSquare {
+        unimplemented!();
+    }
 
     fn produce_rotations(&self) -> Vec<ThreeSquare> {
         unimplemented!();
@@ -83,9 +83,9 @@ impl FourSquare {
 }
 
 impl ThreeSquare {
-	fn new(_pixels: &[bool]) -> ThreeSquare {
-		unimplemented!();
-	}
+    fn new(_pixels: &[bool]) -> ThreeSquare {
+        unimplemented!();
+    }
 
     fn produce_rotations(&self) -> Vec<ThreeSquare> {
         unimplemented!();
@@ -113,9 +113,9 @@ impl ThreeSquare {
 }
 
 impl TwoSquare {
-	fn new(_pixels: &[bool]) -> TwoSquare {
-		unimplemented!();
-	}
+    fn new(_pixels: &[bool]) -> TwoSquare {
+        unimplemented!();
+    }
 
     fn produce_rotations(&self) -> Vec<TwoSquare> {
         unimplemented!();

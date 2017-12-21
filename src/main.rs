@@ -69,7 +69,7 @@ enum AppError {
 /// problem.
 fn main() {
     match run() {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => {
             eprintln!("Error: {}", e);
             std::process::exit(1);

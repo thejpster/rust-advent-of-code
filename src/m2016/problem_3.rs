@@ -14,7 +14,11 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     count = 0;
     for line in contents[0].chunks(3) {
         let parts: Vec<Vec<u32>> = line.iter()
-            .map(|x| x.split_whitespace().map(|x| x.parse()).collect::<Result<_, _>>())
+            .map(|x| {
+                x.split_whitespace()
+                    .map(|x| x.parse())
+                    .collect::<Result<_, _>>()
+            })
             .collect::<Result<_, _>>()?;
         let tri1 = vec![parts[0][0], parts[1][0], parts[2][0]];
         let tri2 = vec![parts[0][1], parts[1][1], parts[2][1]];
