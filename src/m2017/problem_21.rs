@@ -17,7 +17,7 @@ struct ThreeSquare {
 
 #[derive(Debug, Eq, Hash, PartialEq, Copy, Clone)]
 struct FourSquare {
-    pixels: [[Pixel; 3]; 3],
+    pixels: [[Pixel; 4]; 4],
 }
 
 struct Image {
@@ -61,84 +61,151 @@ impl Image {
 }
 
 impl FourSquare {
-    fn new(_pixels: &[bool]) -> FourSquare {
-        unimplemented!();
-    }
-
-    fn produce_rotations(&self) -> Vec<ThreeSquare> {
-        unimplemented!();
-    }
-
-    fn flip_x(&self) -> ThreeSquare {
-        unimplemented!();
-    }
-
-    fn rotate_90_left(&self) -> ThreeSquare {
-        unimplemented!();
-    }
-
-    fn flip_y(&self) -> ThreeSquare {
-        unimplemented!();
+    fn new(pixels: &[bool]) -> FourSquare {
+        FourSquare {
+            pixels: [
+                [pixels[0], pixels[1], pixels[2], pixels[3]],
+                [pixels[4], pixels[5], pixels[6], pixels[7]],
+                [pixels[8], pixels[9], pixels[10], pixels[11]],
+                [pixels[12], pixels[13], pixels[14], pixels[15]],
+            ]
+        }
     }
 }
 
 impl ThreeSquare {
-    fn new(_pixels: &[bool]) -> ThreeSquare {
-        unimplemented!();
+    fn new(pixels: &[bool]) -> ThreeSquare {
+        ThreeSquare {
+            pixels: [
+                [pixels[0], pixels[1], pixels[2]],
+                [pixels[3], pixels[4], pixels[5]],
+                [pixels[6], pixels[7], pixels[8]],
+            ]
+        }
     }
 
     fn produce_rotations(&self) -> Vec<ThreeSquare> {
-        unimplemented!();
+        vec![
+            *self,
+            self.flip_x(),
+            self.flip_y(),
+            self.rotate_90_left(),
+            self.rotate_90_left().rotate_90_left(),
+            self.rotate_90_left().rotate_90_left().rotate_90_left()
+        ]
     }
 
     fn flip_x(&self) -> ThreeSquare {
-        unimplemented!();
+        ThreeSquare {
+            pixels: [
+                [self.pixels[0][2], self.pixels[0][1], self.pixels[0][0]],
+                [self.pixels[1][2], self.pixels[1][1], self.pixels[1][0]],
+                [self.pixels[2][2], self.pixels[2][1], self.pixels[2][0]],
+            ]
+        }
     }
 
     fn rotate_90_left(&self) -> ThreeSquare {
-        unimplemented!();
+        ThreeSquare {
+            pixels: [
+                [self.pixels[2][0], self.pixels[1][0], self.pixels[0][0]],
+                [self.pixels[2][1], self.pixels[1][1], self.pixels[0][1]],
+                [self.pixels[2][2], self.pixels[1][2], self.pixels[0][2]],
+            ]
+        }
     }
 
     fn flip_y(&self) -> ThreeSquare {
-        unimplemented!();
+        ThreeSquare {
+            pixels: [
+                [self.pixels[2][0], self.pixels[2][1], self.pixels[2][2]],
+                [self.pixels[1][0], self.pixels[1][1], self.pixels[1][2]],
+                [self.pixels[0][0], self.pixels[0][1], self.pixels[0][2]],
+            ]
+        }
     }
 
-    fn map(&self) -> FourSquare {
-        unimplemented!();
-    }
-
-    fn parse(_lines: &[String]) -> HashMap<ThreeSquare, FourSquare> {
-        unimplemented!();
+    fn parse(lines: &[String]) -> HashMap<ThreeSquare, FourSquare> {
+        let mut result = HashMap::new();
+        for line in lines {
+            let parts: Vec<&str> = line.split(" => ").collect();
+            if parts[0].len() == 11 {
+                let input = parts[0].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let input = ThreeSquare::new(&input);
+                let output = parts[1].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let output = FourSquare::new(&output);
+                for i in input.produce_rotations().iter() {
+                    result.insert(*i, output);
+                }
+            }
+        }
+        result
     }
 }
 
 impl TwoSquare {
-    fn new(_pixels: &[bool]) -> TwoSquare {
-        unimplemented!();
+    fn new(pixels: &[bool]) -> TwoSquare {
+        TwoSquare {
+            pixels: [
+                [pixels[0], pixels[1]],
+                [pixels[2], pixels[3]],
+            ]
+        }
     }
 
     fn produce_rotations(&self) -> Vec<TwoSquare> {
-        unimplemented!();
+        vec![
+            *self,
+            self.flip_x(),
+            self.flip_y(),
+            self.rotate_90_left(),
+            self.rotate_90_left().rotate_90_left(),
+            self.rotate_90_left().rotate_90_left().rotate_90_left()
+        ]
     }
 
     fn flip_x(&self) -> TwoSquare {
-        unimplemented!();
+        TwoSquare {
+            pixels: [
+                [self.pixels[0][1], self.pixels[0][0]],
+                [self.pixels[1][1], self.pixels[1][0]],
+            ]
+        }
     }
 
     fn rotate_90_left(&self) -> TwoSquare {
-        unimplemented!();
+        TwoSquare {
+            pixels: [
+                [self.pixels[1][0], self.pixels[0][0]],
+                [self.pixels[1][1], self.pixels[0][1]],
+            ]
+        }
     }
 
     fn flip_y(&self) -> TwoSquare {
-        unimplemented!();
+        TwoSquare {
+            pixels: [
+                [self.pixels[1][0], self.pixels[1][1]],
+                [self.pixels[0][0], self.pixels[0][1]],
+            ]
+        }
     }
 
-    fn map(&self) -> ThreeSquare {
-        unimplemented!();
-    }
-
-    fn parse(_lines: &[String]) -> HashMap<TwoSquare, ThreeSquare> {
-        unimplemented!();
+    fn parse(lines: &[String]) -> HashMap<TwoSquare, ThreeSquare> {
+        let mut result = HashMap::new();
+        for line in lines {
+            let parts: Vec<&str> = line.split(" => ").collect();
+            if parts[0].len() == 5 {
+                let input = parts[0].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let input = TwoSquare::new(&input);
+                let output = parts[1].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let output = ThreeSquare::new(&output);
+                for i in input.produce_rotations().iter() {
+                    result.insert(*i, output);
+                }
+            }
+        }
+        result
     }
 }
 
