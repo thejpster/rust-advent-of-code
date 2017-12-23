@@ -5,17 +5,17 @@ use std::collections::HashMap;
 
 type Pixel = bool;
 
-#[derive(Debug, Eq, Hash, PartialEq, Copy, Clone)]
+#[derive(Eq, Hash, PartialEq, Copy, Clone)]
 struct TwoSquare {
     pixels: [[Pixel; 2]; 2],
 }
 
-#[derive(Debug, Eq, Hash, PartialEq, Copy, Clone)]
+#[derive(Eq, Hash, PartialEq, Copy, Clone)]
 struct ThreeSquare {
     pixels: [[Pixel; 3]; 3],
 }
 
-#[derive(Debug, Eq, Hash, PartialEq, Copy, Clone)]
+#[derive(Eq, Hash, PartialEq, Copy, Clone)]
 struct FourSquare {
     pixels: [[Pixel; 4]; 4],
 }
@@ -32,6 +32,42 @@ impl fmt::Debug for Image {
             for pixel in row {
                 write!(f, "{}", if *pixel { '#' } else { '.' })?;
             }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
+
+impl fmt::Debug for TwoSquare {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for row in &self.pixels {
+            for pixel in row {
+                write!(f, "{}", if *pixel { '#' } else { '.' })?;
+            }
+            write!(f, "/")?;
+        }
+        Ok(())
+    }
+}
+
+impl fmt::Debug for ThreeSquare {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for row in &self.pixels {
+            for pixel in row {
+                write!(f, "{}", if *pixel { '#' } else { '.' })?;
+            }
+            write!(f, "/")?;
+        }
+        Ok(())
+    }
+}
+
+impl fmt::Debug for FourSquare {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for row in &self.pixels {
+            for pixel in row {
+                write!(f, "{}", if *pixel { '#' } else { '.' })?;
+            }
             writeln!(f, "")?;
         }
         Ok(())
@@ -41,8 +77,22 @@ impl fmt::Debug for Image {
 impl Image {
     fn decompose_two(&self) -> Option<Vec<TwoSquare>> {
         if (self.size % 2) == 0 {
-            let result = vec![];
-            unimplemented!();
+            let mut result = vec![];
+            let x_count = self.size / 2;
+            let y_count = x_count;
+            for y in 0..y_count {
+                for x in 0..x_count {
+                    let offset = (y * self.size * 2) + (x * 2);
+                    let offset2 = offset + self.size;
+                    let sq = TwoSquare::new(&[
+                        self.pixels[offset],
+                        self.pixels[offset + 1],
+                        self.pixels[offset2],
+                        self.pixels[offset2 + 1],
+                    ]);
+                    result.push(sq);
+                }
+            }
             Some(result)
         } else {
             None
@@ -51,29 +101,80 @@ impl Image {
 
     fn decompose_three(&self) -> Option<Vec<ThreeSquare>> {
         if (self.size % 3) == 0 {
-            let result = vec![];
-            unimplemented!();
+            let mut result = vec![];
+            let x_count = self.size / 3;
+            let y_count = x_count;
+            for y in 0..y_count {
+                for x in 0..x_count {
+                    let offset = (y * self.size * 3) + (x * 3);
+                    let offset2 = offset + self.size;
+                    let offset3 = offset2 + self.size;
+                    let sq = ThreeSquare::new(&[
+                        self.pixels[offset],
+                        self.pixels[offset + 1],
+                        self.pixels[offset + 2],
+                        self.pixels[offset2],
+                        self.pixels[offset2 + 1],
+                        self.pixels[offset2 + 2],
+                        self.pixels[offset3],
+                        self.pixels[offset3 + 1],
+                        self.pixels[offset3 + 2],
+                    ]);
+                    result.push(sq);
+                }
+            }
             Some(result)
         } else {
             None
         }
     }
 
-    fn create_from_threes(_squares: &[ThreeSquare]) -> Image {
-        unimplemented!();
+    fn create_from_threes(squares: &[ThreeSquare]) -> Image {
+        println!("create_from_threes: {:?}", squares);
+        let mut im = Image {
+            pixels: Vec::new(),
+            size: (squares.len() as f32 * 9.0).sqrt() as usize,
+        };
+        println!("New size: {}", im.size);
+        for input_line in squares.chunks(im.size / 3) {
+            for in_row in 0..3 {
+                for in_square in 0..input_line.len() {
+                    for in_col in 0..3 {
+                        im.pixels.push(input_line[in_square].pixels[in_row][in_col]);
+                    }
+                }
+            }
+        }
+        im
     }
 
-    fn create_from_fours(_squares: &[FourSquare]) -> Image {
-        unimplemented!();
+    fn create_from_fours(squares: &[FourSquare]) -> Image {
+        println!("create_from_fours: {:?}", squares);
+        let mut im = Image {
+            pixels: Vec::new(),
+            size: (squares.len() as f32 * 16.0).sqrt() as usize,
+        };
+        println!("New size: {}", im.size);
+        for input_line in squares.chunks(im.size / 4) {
+            for in_row in 0..4 {
+                for in_square in 0..input_line.len() {
+                    for in_col in 0..4 {
+                        im.pixels.push(input_line[in_square].pixels[in_row][in_col]);
+                    }
+                }
+            }
+        }
+        im
     }
 
     fn count_pixels(&self) -> usize {
-        0
+        self.pixels.iter().filter(|x| **x).count()
     }
 }
 
 impl FourSquare {
     fn new(pixels: &[bool]) -> FourSquare {
+        assert_eq!(pixels.len(), 16);
         FourSquare {
             pixels: [
                 [pixels[0], pixels[1], pixels[2], pixels[3]],
@@ -87,6 +188,7 @@ impl FourSquare {
 
 impl ThreeSquare {
     fn new(pixels: &[bool]) -> ThreeSquare {
+        assert_eq!(pixels.len(), 9);
         ThreeSquare {
             pixels: [
                 [pixels[0], pixels[1], pixels[2]],
@@ -99,11 +201,16 @@ impl ThreeSquare {
     fn produce_rotations(&self) -> Vec<ThreeSquare> {
         vec![
             *self,
-            self.flip_x(),
-            self.flip_y(),
             self.rotate_90_left(),
             self.rotate_90_left().rotate_90_left(),
             self.rotate_90_left().rotate_90_left().rotate_90_left(),
+            self.flip_x(),
+            self.flip_x().rotate_90_left(),
+            self.flip_x().rotate_90_left().rotate_90_left(),
+            self.flip_x()
+                .rotate_90_left()
+                .rotate_90_left()
+                .rotate_90_left(),
         ]
     }
 
@@ -123,16 +230,6 @@ impl ThreeSquare {
                 [self.pixels[2][0], self.pixels[1][0], self.pixels[0][0]],
                 [self.pixels[2][1], self.pixels[1][1], self.pixels[0][1]],
                 [self.pixels[2][2], self.pixels[1][2], self.pixels[0][2]],
-            ],
-        }
-    }
-
-    fn flip_y(&self) -> ThreeSquare {
-        ThreeSquare {
-            pixels: [
-                [self.pixels[2][0], self.pixels[2][1], self.pixels[2][2]],
-                [self.pixels[1][0], self.pixels[1][1], self.pixels[1][2]],
-                [self.pixels[0][0], self.pixels[0][1], self.pixels[0][2]],
             ],
         }
     }
@@ -165,6 +262,7 @@ impl ThreeSquare {
 
 impl TwoSquare {
     fn new(pixels: &[bool]) -> TwoSquare {
+        assert_eq!(pixels.len(), 4);
         TwoSquare {
             pixels: [[pixels[0], pixels[1]], [pixels[2], pixels[3]]],
         }
@@ -173,11 +271,16 @@ impl TwoSquare {
     fn produce_rotations(&self) -> Vec<TwoSquare> {
         vec![
             *self,
-            self.flip_x(),
-            self.flip_y(),
             self.rotate_90_left(),
             self.rotate_90_left().rotate_90_left(),
             self.rotate_90_left().rotate_90_left().rotate_90_left(),
+            self.flip_x(),
+            self.flip_x().rotate_90_left(),
+            self.flip_x().rotate_90_left().rotate_90_left(),
+            self.flip_x()
+                .rotate_90_left()
+                .rotate_90_left()
+                .rotate_90_left(),
         ]
     }
 
@@ -195,15 +298,6 @@ impl TwoSquare {
             pixels: [
                 [self.pixels[1][0], self.pixels[0][0]],
                 [self.pixels[1][1], self.pixels[0][1]],
-            ],
-        }
-    }
-
-    fn flip_y(&self) -> TwoSquare {
-        TwoSquare {
-            pixels: [
-                [self.pixels[1][0], self.pixels[1][1]],
-                [self.pixels[0][0], self.pixels[0][1]],
             ],
         }
     }
@@ -244,13 +338,24 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     };
     println!("Image:\n{:?}", image);
     println!("Pixels: {}", image.count_pixels());
-    for _ in 0..5 {
-        if let Some(sub) = image.decompose_three() {
-            let squares: Vec<FourSquare> = sub.iter().map(|x| three_rules[x]).collect();
-            image = Image::create_from_fours(&squares);
-        } else if let Some(sub) = image.decompose_two() {
+    for i in 0..5 {
+        println!("Iteration: {}", i);
+        if let Some(sub) = image.decompose_two() {
+            println!("Sub 2:");
+            for s in &sub {
+                println!("{:?}", s);
+            }
             let squares: Vec<ThreeSquare> = sub.iter().map(|x| two_rules[x]).collect();
             image = Image::create_from_threes(&squares);
+        } else if let Some(sub) = image.decompose_three() {
+            println!("Sub 3:");
+            for s in &sub {
+                println!("{:?}", s);
+            }
+            let squares: Vec<FourSquare> = sub.iter().map(|x| three_rules[x]).collect();
+            image = Image::create_from_fours(&squares);
+        } else {
+            panic!("Did not decompose!");
         }
         println!("Image:\n{:?}", image);
         println!("Pixels: {}", image.count_pixels());
