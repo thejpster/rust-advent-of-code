@@ -111,13 +111,13 @@ fn is_prime(num: u32) -> bool {
             return false;
         }
     }
-    return true;
+    true
 }
 
 fn run2(_contents: &[Vec<String>]) -> Result<(), Error> {
     let mut result = 0;
-    let mut i = 108100u32;
-    while i <= 125100u32 {
+    let mut i = 108_100u32;
+    while i <= 125_100u32 {
         if !is_prime(i) {
             result += 1;
         }

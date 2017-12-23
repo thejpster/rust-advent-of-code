@@ -157,7 +157,7 @@ fn part2(contents: &[Vec<String>]) -> Result<(), Error> {
             Infected::Weakened => {
                 state.set(Infected::Infected);
                 state += 1;
-                count = count + 1;
+                count += 1;
             }
             Infected::Clean => {
                 state.set(Infected::Weakened);

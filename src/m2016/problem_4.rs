@@ -1,6 +1,7 @@
 use std::collections::HashMap;
-
 use failure::Error;
+use failure;
+
 pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     let mut count = 0;
     for room in &contents[0] {
@@ -24,7 +25,7 @@ fn shift_string(s: &str, shift: u32) -> Result<String, Error> {
                 }
             })
             .collect(),
-    ).map_err(|_| format_err!("Failed to make string"))
+    ).map_err(|_| failure::err_msg("Failed to make string"))
 }
 
 fn check_csum(word: &str) -> Result<u32, Error> {

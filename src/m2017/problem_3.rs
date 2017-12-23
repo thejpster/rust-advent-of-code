@@ -26,6 +26,7 @@
 
 use std::collections::HashMap;
 use failure::Error;
+use failure;
 
 #[derive(Eq, PartialEq, Hash, Copy, Clone)]
 struct Position {
@@ -188,5 +189,5 @@ pub fn problem_b() -> Result<(), Error> {
             }
         }
     }
-    Err(format_err!("Shouldn't get here..."))
+    Err(failure::err_msg("Shouldn't get here..."))
 }
