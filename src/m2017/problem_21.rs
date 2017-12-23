@@ -40,11 +40,23 @@ impl fmt::Debug for Image {
 
 impl Image {
     fn decompose_two(&self) -> Option<Vec<TwoSquare>> {
-        unimplemented!();
+        if (self.size % 2) == 0 {
+            let result = vec![];
+            unimplemented!();
+            Some(result)
+        } else {
+            None
+        }
     }
 
     fn decompose_three(&self) -> Option<Vec<ThreeSquare>> {
-        unimplemented!();
+        if (self.size % 3) == 0 {
+            let result = vec![];
+            unimplemented!();
+            Some(result)
+        } else {
+            None
+        }
     }
 
     fn create_from_threes(_squares: &[ThreeSquare]) -> Image {
@@ -68,7 +80,7 @@ impl FourSquare {
                 [pixels[4], pixels[5], pixels[6], pixels[7]],
                 [pixels[8], pixels[9], pixels[10], pixels[11]],
                 [pixels[12], pixels[13], pixels[14], pixels[15]],
-            ]
+            ],
         }
     }
 }
@@ -80,7 +92,7 @@ impl ThreeSquare {
                 [pixels[0], pixels[1], pixels[2]],
                 [pixels[3], pixels[4], pixels[5]],
                 [pixels[6], pixels[7], pixels[8]],
-            ]
+            ],
         }
     }
 
@@ -91,7 +103,7 @@ impl ThreeSquare {
             self.flip_y(),
             self.rotate_90_left(),
             self.rotate_90_left().rotate_90_left(),
-            self.rotate_90_left().rotate_90_left().rotate_90_left()
+            self.rotate_90_left().rotate_90_left().rotate_90_left(),
         ]
     }
 
@@ -101,7 +113,7 @@ impl ThreeSquare {
                 [self.pixels[0][2], self.pixels[0][1], self.pixels[0][0]],
                 [self.pixels[1][2], self.pixels[1][1], self.pixels[1][0]],
                 [self.pixels[2][2], self.pixels[2][1], self.pixels[2][0]],
-            ]
+            ],
         }
     }
 
@@ -111,7 +123,7 @@ impl ThreeSquare {
                 [self.pixels[2][0], self.pixels[1][0], self.pixels[0][0]],
                 [self.pixels[2][1], self.pixels[1][1], self.pixels[0][1]],
                 [self.pixels[2][2], self.pixels[1][2], self.pixels[0][2]],
-            ]
+            ],
         }
     }
 
@@ -121,7 +133,7 @@ impl ThreeSquare {
                 [self.pixels[2][0], self.pixels[2][1], self.pixels[2][2]],
                 [self.pixels[1][0], self.pixels[1][1], self.pixels[1][2]],
                 [self.pixels[0][0], self.pixels[0][1], self.pixels[0][2]],
-            ]
+            ],
         }
     }
 
@@ -130,9 +142,17 @@ impl ThreeSquare {
         for line in lines {
             let parts: Vec<&str> = line.split(" => ").collect();
             if parts[0].len() == 11 {
-                let input = parts[0].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let input = parts[0]
+                    .chars()
+                    .filter(|ch| *ch != '/')
+                    .map(|ch| ch == '#')
+                    .collect::<Vec<bool>>();
                 let input = ThreeSquare::new(&input);
-                let output = parts[1].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let output = parts[1]
+                    .chars()
+                    .filter(|ch| *ch != '/')
+                    .map(|ch| ch == '#')
+                    .collect::<Vec<bool>>();
                 let output = FourSquare::new(&output);
                 for i in input.produce_rotations().iter() {
                     result.insert(*i, output);
@@ -146,10 +166,7 @@ impl ThreeSquare {
 impl TwoSquare {
     fn new(pixels: &[bool]) -> TwoSquare {
         TwoSquare {
-            pixels: [
-                [pixels[0], pixels[1]],
-                [pixels[2], pixels[3]],
-            ]
+            pixels: [[pixels[0], pixels[1]], [pixels[2], pixels[3]]],
         }
     }
 
@@ -160,7 +177,7 @@ impl TwoSquare {
             self.flip_y(),
             self.rotate_90_left(),
             self.rotate_90_left().rotate_90_left(),
-            self.rotate_90_left().rotate_90_left().rotate_90_left()
+            self.rotate_90_left().rotate_90_left().rotate_90_left(),
         ]
     }
 
@@ -169,7 +186,7 @@ impl TwoSquare {
             pixels: [
                 [self.pixels[0][1], self.pixels[0][0]],
                 [self.pixels[1][1], self.pixels[1][0]],
-            ]
+            ],
         }
     }
 
@@ -178,7 +195,7 @@ impl TwoSquare {
             pixels: [
                 [self.pixels[1][0], self.pixels[0][0]],
                 [self.pixels[1][1], self.pixels[0][1]],
-            ]
+            ],
         }
     }
 
@@ -187,7 +204,7 @@ impl TwoSquare {
             pixels: [
                 [self.pixels[1][0], self.pixels[1][1]],
                 [self.pixels[0][0], self.pixels[0][1]],
-            ]
+            ],
         }
     }
 
@@ -196,9 +213,17 @@ impl TwoSquare {
         for line in lines {
             let parts: Vec<&str> = line.split(" => ").collect();
             if parts[0].len() == 5 {
-                let input = parts[0].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let input = parts[0]
+                    .chars()
+                    .filter(|ch| *ch != '/')
+                    .map(|ch| ch == '#')
+                    .collect::<Vec<bool>>();
                 let input = TwoSquare::new(&input);
-                let output = parts[1].chars().filter(|ch| *ch != '/').map(|ch| ch == '#').collect::<Vec<bool>>();
+                let output = parts[1]
+                    .chars()
+                    .filter(|ch| *ch != '/')
+                    .map(|ch| ch == '#')
+                    .collect::<Vec<bool>>();
                 let output = ThreeSquare::new(&output);
                 for i in input.produce_rotations().iter() {
                     result.insert(*i, output);
