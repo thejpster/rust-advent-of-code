@@ -109,6 +109,7 @@ fn run() -> Result<(), Error> {
             22 => m2016::problem_22::run(&files),
             23 => m2016::problem_23::run(&files),
             24 => m2016::problem_24::run(&files),
+            25 => m2016::problem_25::run(&files),
             _ => {
                 eprintln!("Don't have problem {} in year {}", problem, year);
                 std::process::exit(1)
@@ -139,6 +140,7 @@ fn run() -> Result<(), Error> {
             22 => m2017::problem_22::run(&files),
             23 => m2017::problem_23::run(&files),
             24 => m2017::problem_24::run(&files),
+            25 => m2017::problem_25::run(&files),
             _ => {
                 eprintln!("Don't have problem {} in year {}", problem, year);
                 std::process::exit(1)
