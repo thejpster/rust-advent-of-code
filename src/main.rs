@@ -46,10 +46,6 @@ use failure::Error;
 enum AppError {
     #[fail(display = "got '{}' from file '{}'", _1, _0)]
     IOError(String, #[cause] std::io::Error),
-    #[fail(display = "{} doesn't look like a number", _0)]
-    BadNumber(String),
-    #[fail(display = "you should call '{} <year> <problem> <file> [ <file> ... ]'", _0)]
-    BadArgs(String),
 }
 
 // ****************************************************************************
