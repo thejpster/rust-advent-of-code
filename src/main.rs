@@ -81,6 +81,11 @@ fn main() -> Result<(), Error> {
 //
 // ****************************************************************************
 
+pub fn parse_numbers(lines: &[String]) -> Result<Vec<i64>, Error> {
+    let numbers: Vec<i64> = lines.iter().map(|x| x.parse()).collect::<Result<_, _>>()?;
+    Ok(numbers)
+}
+
 fn parse_args() -> Result<(Vec<String>), Error> {
     let args: Vec<String> = env::args().collect();
     let file_names = args[1..].to_vec();
