@@ -14,9 +14,9 @@ extern crate md5;
 // mod m2016;
 mod m2018;
 
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use std::env;
 
 use failure::Error;
 
@@ -72,7 +72,7 @@ fn main() -> Result<(), Error> {
         .iter()
         .map(|name| open(name))
         .collect::<Result<_, _>>()?;
-    m2018::problem_2::run(&files)
+    m2018::problem_3::run(&files)
 }
 
 // ****************************************************************************
