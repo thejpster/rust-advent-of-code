@@ -42,8 +42,6 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
     Ok(())
 }
 
-
-
 fn score(input: &str) -> (usize, usize) {
     use std::collections::HashMap;
     let mut m = HashMap::new();
@@ -52,7 +50,7 @@ fn score(input: &str) -> (usize, usize) {
     }
     let mut has_two = 0;
     let mut has_three = 0;
-    for &v in m.values () {
+    for &v in m.values() {
         if v == 2 {
             has_two = 1;
         }
