@@ -6,6 +6,8 @@
 //
 // ****************************************************************************
 
+#![allow(dead_code)]
+
 #[macro_use]
 extern crate failure;
 extern crate md5;
@@ -72,7 +74,7 @@ fn main() -> Result<(), Error> {
         .iter()
         .map(|name| open(name))
         .collect::<Result<_, _>>()?;
-    m2018::problem_3::run(&files)
+    m2018::problem_4::run(&files)
 }
 
 // ****************************************************************************
