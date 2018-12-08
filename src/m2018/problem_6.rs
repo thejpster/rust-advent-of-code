@@ -7,7 +7,8 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
         .map(|x| {
             let mut i = x.split(",").map(|y| y.trim().parse().unwrap());
             (i.next().unwrap(), i.next().unwrap())
-        }).collect();
+        })
+        .collect();
 
     let mut map: HashMap<(i32, i32), usize> = HashMap::new();
     let mut counts: HashMap<usize, usize> = HashMap::new();

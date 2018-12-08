@@ -21,7 +21,7 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
 #[derive(Copy, Clone, Debug)]
 enum Worker {
     Busy(char, u32),
-    Idle
+    Idle,
 }
 
 fn time_from_char(ch: char) -> u32 {
@@ -70,9 +70,7 @@ fn calc_parallel_time(mut map: HashMap<char, BTreeMap<char, ()>>) -> u32 {
                     busy_workers = true;
                     Worker::Busy(*ch, *left - 1)
                 }
-                Worker::Idle => {
-                    Worker::Idle
-                }
+                Worker::Idle => Worker::Idle,
             }
         }
         // println!("Workers post-work: {:?}", workers);
@@ -84,7 +82,7 @@ fn calc_parallel_time(mut map: HashMap<char, BTreeMap<char, ()>>) -> u32 {
             }
         }
         candidates.sort();
-        if candidates.len() == 0 && !busy_workers{
+        if candidates.len() == 0 && !busy_workers {
             break;
         }
         for w in workers.iter_mut() {
