@@ -74,7 +74,7 @@ fn main() -> Result<(), Error> {
         .iter()
         .map(|name| open(name))
         .collect::<Result<_, _>>()?;
-    m2018::problem_7::run(&files)
+    m2018::problem_8::run(&files)
 }
 
 // ****************************************************************************
