@@ -11,6 +11,7 @@
 #[macro_use]
 extern crate failure;
 extern crate md5;
+extern crate regex;
 
 // mod m2017;
 // mod m2016;
@@ -74,7 +75,7 @@ fn main() -> Result<(), Error> {
         .iter()
         .map(|name| open(name))
         .collect::<Result<_, _>>()?;
-    m2018::problem_8::run(&files)
+    m2018::problem_11::run(&files)
 }
 
 // ****************************************************************************
