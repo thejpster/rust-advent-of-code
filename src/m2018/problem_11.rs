@@ -1,6 +1,6 @@
 use failure::Error;
 use std::collections::HashSet;
-pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
+pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
     let grid_serial_number = 2866;
     let mut max = ((0, 0), 0);
     for left in 1..=298 {
@@ -31,7 +31,7 @@ pub fn run(contents: &[Vec<String>]) -> Result<(), Error> {
                 let mut total = 0;
                 for square_x in 0..size {
                     for square_y in 0..size {
-                        total += (cell_power(left + square_x, top + square_y, grid_serial_number));
+                        total += cell_power(left + square_x, top + square_y, grid_serial_number);
                     }
                 }
                 // println!("{:?}", ((left, top, size), total));
