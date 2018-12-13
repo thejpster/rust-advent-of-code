@@ -7,3 +7,4 @@ authors = ["Jonathan Pallant <jonathan.pallant@cambridgeconsultants.com>"]
 failure = "0.1.1"
 md5 = "0.3.6"
 regex = "1"
+colored = "*"

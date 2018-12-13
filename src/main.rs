@@ -10,6 +10,7 @@
 
 #[macro_use]
 extern crate failure;
+extern crate colored;
 extern crate md5;
 extern crate regex;
 
@@ -75,7 +76,7 @@ fn main() -> Result<(), Error> {
         .iter()
         .map(|name| open(name))
         .collect::<Result<_, _>>()?;
-    m2018::problem_12::run(&files)
+    m2018::problem_13::run(&files)
 }
 
 // ****************************************************************************

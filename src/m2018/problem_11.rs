@@ -1,5 +1,4 @@
 use failure::Error;
-use std::collections::HashSet;
 pub fn run(_contents: &[Vec<String>]) -> Result<(), Error> {
     let grid_serial_number = 2866;
     let mut max = ((0, 0), 0);
